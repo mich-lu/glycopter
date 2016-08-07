@@ -14,4 +14,14 @@ public abstract class Atom {
 		return id;
 	}
 	
+	public int getX(){
+		return xPos;
+	}
+	public int getY(){
+		return yPos;
+	}
+	public int getZ(){
+		return zPos;
+	}
+	
 }
