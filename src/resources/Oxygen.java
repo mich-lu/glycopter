@@ -8,9 +8,5 @@ public class Oxygen extends Atom{
 		atomType.equals("O"); 
 		// TODO Auto-generated constructor stub
 	}
-	
-	public String getAtomType(){
-		return atomType;
-	}
 
 }

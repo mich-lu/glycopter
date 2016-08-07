@@ -7,9 +7,5 @@ public class Carbon extends Atom {
 		super(ID, x, y, z);
 		atomType.equals("C");
 	}
-	
-	public String getAtomType(){
-		return atomType;
-	}
 
 }

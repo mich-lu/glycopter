@@ -9,8 +9,4 @@ public class Hydrogen extends Atom{
 		// TODO Auto-generated constructor stub
 	}
 
-	public String getAtomType(){
-		return atomType;
-	}
-
 }
