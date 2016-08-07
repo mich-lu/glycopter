@@ -23,4 +23,8 @@ public class Bond {
 	public int getBonds(){
 		return noBonds;
 	}
+	
+	public int getBondID(){
+		return bondID;
+	}
 }
