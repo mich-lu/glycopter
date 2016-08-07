@@ -1,3 +1,5 @@
+package resources;
+
 
 public class Bond {
 
@@ -16,5 +18,9 @@ public class Bond {
 	
 	public void incBonds(){
 		noBonds ++;
+	}
+	
+	public int getBonds(){
+		return noBonds;
 	}
 }

@@ -1,7 +1,10 @@
+package resources;
+
 
 public abstract class Atom {
 	int id;
 	double xPos, yPos, zPos;
+	String atomType;
 	
 	public Atom(int ID, double x, double y, double z){
 		id = ID;
@@ -14,14 +17,29 @@ public abstract class Atom {
 		return id;
 	}
 	
-	public int getX(){
+	public double getX(){
 		return xPos;
 	}
-	public int getY(){
+	public double getY(){
 		return yPos;
 	}
-	public int getZ(){
+	public double getZ(){
 		return zPos;
 	}
 	
+	public void setX(double x){
+		xPos = x;
+	}
+	
+	public void setY(double y){
+		yPos = y;
+	}
+	
+	public void setZ(double z){
+		zPos = z;
+	}
+	
+	public String getAtomType(){
+		return atomType;
+	}
 }

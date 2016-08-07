@@ -5,6 +5,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import resources.Atom;
+import resources.Carbon;
+import resources.Hydrogen;
+import resources.Oxygen;
+
 
 public class readPDB {
 	
