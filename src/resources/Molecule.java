@@ -1,17 +1,22 @@
 package resources;
 
+import java.util.ArrayList;
+
 
 public class Molecule {
 
 	double distance;
-	Bond bonds[];
+	//ArrayList<Atom> atomList = new ArrayList<Atom>(); I'm not sure how we are coordinating the atom list from readPDB and the atom list here.
 	Atom atoms[];
+	ArrayList<Bond> bondList = new ArrayList<Bond>();
+	Bond bond;
 	Atom atom1;
 	Atom atom2;
 	
 	public Molecule(){
 		distance = 0;
-		bonds = null;
+		bondList = null;
+		bond = null;
 		atoms = null;
 		atom1 = null;
 		atom2 = null;
@@ -35,26 +40,32 @@ public class Molecule {
 				// C-C bonds range from 120-154pm
 				
 				if (atom1.getAtomType().equals("C") && atom2.getAtomType().equals("C") && distance <= 154){
-					new Bond(atom1, atom2);
-					
+					bond = new Bond(atom1, atom2);
+					bondList.add(bond);
 				}
 				
 				// check if distance is right for a C-O bond
 				// C-O bonds range from 143-215pm
 				else if (atom1.getAtomType().equals("C") && atom2.getAtomType().equals("O") && distance <= 215){
 					new Bond(atom1, atom2);
+					bond = new Bond(atom1, atom2);
+					bondList.add(bond);
 				}
 				
 				// check if distance is right for a C-H bond
 				// C-H bonds range from 106-112pm
 				else if (atom1.getAtomType().equals("C") && atom2.getAtomType().equals("H") && distance <= 112){
 					new Bond(atom1, atom2);
+					bond = new Bond(atom1, atom2);
+					bondList.add(bond);
 				}
 				
 				// check if distance is right for a O-H bond
 				// O-H bond is approximately 96pm
 				else if (atom1.getAtomType().equals("O") && atom2.getAtomType().equals("H") && distance <= 96){
 					new Bond(atom1, atom2);
+					bond = new Bond(atom1, atom2);
+					bondList.add(bond);
 				}
 			}
 		}
