@@ -6,17 +6,16 @@ import java.util.ArrayList;
 public class Molecule {
 
 	double distance;
-	//ArrayList<Atom> atomList = new ArrayList<Atom>(); I'm not sure how we are coordinating the atom list from readPDB and the atom list here.
-	ArrayList<Bond> atoms;
+	ArrayList<Atom> atoms;
 	ArrayList<Bond> bondList;
 	ArrayList<DihedralAngle> dihedralList;
 	Bond bond;
 	Atom atom1;
 	Atom atom2;
 	
-	public Molecule(Atom[] input){
+	public Molecule(ArrayList<Atom> input){
 		distance = 0;
-		bondList = = new ArrayList<Bond>();
+		bondList = new ArrayList<Bond>();
 		dihedralList = new ArrayList<DihedralAngle>();
 		atoms = input;
 		bond = null;
@@ -26,7 +25,7 @@ public class Molecule {
 	}
 	
 	// I wasn't sure how we check what type of atom it is (Will need to look at Michelle's code for that)
-	public void identifyBonds(Atom atoms[]){
+	public void identifyBonds(ArrayList<Atom> atoms){
 		
 		for (int i = 0; i < (atoms.size() - 1); i++){
 			atom1 = atoms.get(i);
@@ -73,19 +72,14 @@ public class Molecule {
 		}
 	}
 
-	// I added this method to make the code in identifyDihedrals() simpler
-	public int sq(number){
-		return Math.pow(number,2);
-	}
-
 	public void identifyDihedrals(ArrayList<Atom> atomList){
 
 		// Determine 4 atoms in dihedral
 
 
-
+		
 		// create DihedralAngle objects and add to list
-		dihedral = new DihedralAngle(a1, a2, a3, a4); // code to calculate angle in DihedralAngle class
-		dihedralList.add(dihedral)
+		DihedralAngle dihedral = new DihedralAngle(a1, a2, a3, a4); // code to calculate angle in DihedralAngle class
+		dihedralList.add(dihedral);
 	}
 }
