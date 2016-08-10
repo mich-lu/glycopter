@@ -4,19 +4,17 @@ package resources;
 public class Bond {
 
 	int bondID;
-	int noBonds;
+	static int noBonds;
+	Atom atom1, atom2;
 	
-	public Bond(){
-		bondID = 0;
-		noBonds = 0;
-	}
-	
-	public Bond(Atom atom1, Atom atom2){
+	public Bond(Atom a1, Atom a2){
 		bondID = noBonds;
 		incBonds();
+		atom1 = a1;
+		atom2 = a2;
 	}
 	
-	public void incBonds(){
+	public static void incBonds(){
 		noBonds ++;
 	}
 	
@@ -26,5 +24,9 @@ public class Bond {
 	
 	public int getBondID(){
 		return bondID;
+	}
+	
+	public String toString(){
+		return "ID: " + bondID + "atom1: " + atom1.id + ", atom2: " + atom2.id; 
 	}
 }

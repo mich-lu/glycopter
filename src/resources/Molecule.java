@@ -21,7 +21,15 @@ public class Molecule {
 		bond = null;
 		atom1 = null;
 		atom2 = null;
-		
+		identifyBonds(input);
+		System.out.println("atoms");
+		for (Atom a: atoms ){
+			System.out.println(a.id);
+		}
+		System.out.println("bonds");
+		for (Bond b: bondList ){
+			System.out.println(b);
+		}
 	}
 	
 	// I wasn't sure how we check what type of atom it is (Will need to look at Michelle's code for that)
@@ -48,7 +56,7 @@ public class Molecule {
 				// check if distance is right for a C-O bond
 				// C-O bonds range from 143-215pm
 				else if (atom1.getAtomType().equals("C") && atom2.getAtomType().equals("O") && distance <= 215){
-					new Bond(atom1, atom2);
+			
 					bond = new Bond(atom1, atom2);
 					bondList.add(bond);
 				}
@@ -56,7 +64,6 @@ public class Molecule {
 				// check if distance is right for a C-H bond
 				// C-H bonds range from 106-112pm
 				else if (atom1.getAtomType().equals("C") && atom2.getAtomType().equals("H") && distance <= 112){
-					new Bond(atom1, atom2);
 					bond = new Bond(atom1, atom2);
 					bondList.add(bond);
 				}
@@ -64,7 +71,6 @@ public class Molecule {
 				// check if distance is right for a O-H bond
 				// O-H bond is approximately 96pm
 				else if (atom1.getAtomType().equals("O") && atom2.getAtomType().equals("H") && distance <= 96){
-					new Bond(atom1, atom2);
 					bond = new Bond(atom1, atom2);
 					bondList.add(bond);
 				}
