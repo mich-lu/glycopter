@@ -35,7 +35,7 @@ public class DihedralAngle{
 				(d23 + d34 + d24)*(d23 + d34 - d24)*
 				(d23 - d34 + d24)*(-d23 + d34 + d24);
 
-		// therfore, angle is;
+		// therefore, angle is;
 		double angle = Math.acos(P/Math.sqrt(Q));
 
 		return angle;
