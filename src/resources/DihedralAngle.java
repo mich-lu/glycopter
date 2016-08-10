@@ -42,7 +42,11 @@ public class DihedralAngle{
 	}
 	
 	// I added this method to make the code in identifyDihedrals() simpler
-		public double sq(double number){
-			return Math.pow(number,2);
-		}
+	public double sq(double number){
+		return Math.pow(number,2);
+	}
+	
+	public String toString(){
+		return "Angle: " + angle + "atom1: " + a1.id + ", atom2: " + a2.id + "atom3: " + a3.id + ", atom4: " + a4.id; 
+	}
 }

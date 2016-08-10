@@ -8,6 +8,7 @@ import java.util.Scanner;
 import resources.Atom;
 import resources.Carbon;
 import resources.Hydrogen;
+import resources.Molecule;
 import resources.Oxygen;
 
 
@@ -93,6 +94,8 @@ public class readPDB {
 		       	}
 		       	******************************************
 		      */ 	
+		    
+		    Molecule mol = new Molecule(atomList);
 		}
 		
 		catch(FileNotFoundException e){
