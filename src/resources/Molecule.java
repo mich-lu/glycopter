@@ -1,3 +1,10 @@
+/*
+ * 6 August 2016
+ * Glycopter project
+ * this is the main class that coordinates the molecule and all the different aspects of the molecule. It has
+ * lists for the atoms, the bonds, the non-bonding interactions, and the dihedral angles. 
+ */
+
 package resources;
 
 import java.util.ArrayList;
@@ -8,8 +15,10 @@ public class Molecule {
 	double distance;
 	ArrayList<Atom> atoms;
 	ArrayList<Bond> bondList;
+	ArrayList<Interaction> interactionList;
 	ArrayList<DihedralAngle> dihedralList;
 	Bond bond;
+	Interaction interaction;
 	Atom atom1;
 	Atom atom2;
 	
@@ -46,33 +55,40 @@ public class Molecule {
 				distance = Math.sqrt(Math.pow((atom2.getX() - atom1.getX()), 2) + Math.pow((atom2.getY() - atom1.getY()), 2) + Math.pow((atom2.getZ() - atom1.getZ()),  2));
 				
 				// check if distance is right for a C-C bond
-				// C-C bonds range from 120-154pm
-				
-				if (atom1.getAtomType().equals("C") && atom2.getAtomType().equals("C") && distance <= 154){
+				// C-C bonds range from 1.20-1.54 Angstrom
+				if (atom1.getAtomType().equals("C") && atom2.getAtomType().equals("C") && distance <= 1.54){
 					bond = new Bond(atom1, atom2);
 					bondList.add(bond);
 				}
 				
 				// check if distance is right for a C-O bond
-				// C-O bonds range from 143-215pm
-				else if (atom1.getAtomType().equals("C") && atom2.getAtomType().equals("O") && distance <= 215){
+				// C-O bonds range from 1.43-2.15 Angstrom
+				else if (atom1.getAtomType().equals("C") && atom2.getAtomType().equals("O") && distance <= 2.15){
 			
 					bond = new Bond(atom1, atom2);
 					bondList.add(bond);
 				}
 				
 				// check if distance is right for a C-H bond
-				// C-H bonds range from 106-112pm
-				else if (atom1.getAtomType().equals("C") && atom2.getAtomType().equals("H") && distance <= 112){
+				// C-H bonds range from 1.06-1.12 Angstrom
+				else if (atom1.getAtomType().equals("C") && atom2.getAtomType().equals("H") && distance <= 1.12){
 					bond = new Bond(atom1, atom2);
 					bondList.add(bond);
 				}
 				
 				// check if distance is right for a O-H bond
-				// O-H bond is approximately 96pm
-				else if (atom1.getAtomType().equals("O") && atom2.getAtomType().equals("H") && distance <= 96){
+				// O-H bond is approximately 0.96 Angstrom
+				else if (atom1.getAtomType().equals("O") && atom2.getAtomType().equals("H") && distance <= 0.96){
 					bond = new Bond(atom1, atom2);
 					bondList.add(bond);
+				}
+				
+				/*else if it is not a bond, then just create the non-bonded interaction to be used
+				 * for the non-bonding energy calculations
+				 */
+				else{
+					interaction = new Interaction(atom1, atom2, distance);
+					interactionList.add(interaction);
 				}
 			}
 		}
