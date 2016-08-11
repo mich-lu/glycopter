@@ -1,3 +1,9 @@
+/*
+ * 9 August 2016
+ * Glycopter project
+ * This class calculates and makes a list of all the dihedral angles in the molecule. This will then be used to
+ * calculate the energy associated with the dihedral angles in the molecule 
+ */
 package resources;
 
 

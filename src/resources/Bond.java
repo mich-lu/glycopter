@@ -1,3 +1,9 @@
+/*
+ * 6 August 2016
+ * Glycopter project
+ * This class creates bond objects between 2 atoms if they are close enough to be bonded (coded in molecule class).
+ */
+
 package resources;
 
 

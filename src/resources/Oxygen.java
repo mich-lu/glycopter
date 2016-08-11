@@ -1,3 +1,9 @@
+/*
+ * 6 August 2016
+ * Glycopter project
+ * Instantiation of Atom
+ */
+
 package resources;
 
 
