@@ -6,18 +6,21 @@
 
 package resources;
 
+import java.util.ArrayList;
 
 public abstract class Atom {
 	int id;
 	double xPos, yPos, zPos;
 	String atomType;
 	String part1, part3, part4, part5, part9, part10, part11; //The extra information needed to load into the PDB file;
+	ArrayList<Atom> bondedToList;
 	
 	public Atom(int ID, double x, double y, double z){
 		id = ID;
 		xPos=x;
 		yPos=y;
 		zPos=z;
+		bondedToList = new ArrayList<Atom>();
 	}
 	
 	public int getID(){
@@ -89,5 +92,9 @@ public abstract class Atom {
 	
 	public String getPart11(){
 		return part11;
+	}
+	
+	public ArrayList<Atom> getBonds(){
+		return bondedToList;
 	}
 }
