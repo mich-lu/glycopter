@@ -56,7 +56,7 @@ public class Molecule {
 				// check if distance is right for a C-C bond
 				// C-C bonds range from 120-154pm
 				
-				if (atom1.getAtomType().equals("C") && atom2.getAtomType().equals("C") && distance <= 1.54){
+				if (atom1.getAtomType().equals("C") && atom2.getAtomType().equals("C") && distance <= 154){
 					bond = new Bond(atom1, atom2);
 					bondList.add(bond);
 					addToBondsList(atom1, atom2);
@@ -64,7 +64,7 @@ public class Molecule {
 				
 				// check if distance is right for a C-O bond
 				// C-O bonds range from 143-215pm
-				else if (atom1.getAtomType().equals("C") && atom2.getAtomType().equals("O") && distance <= 2.15){
+				else if (atom1.getAtomType().equals("C") && atom2.getAtomType().equals("O") && distance <= 215){
 					bond = new Bond(atom1, atom2);
 					bondList.add(bond);
 					addToBondsList(atom1, atom2);
@@ -72,7 +72,7 @@ public class Molecule {
 				
 				// check if distance is right for a C-H bond
 				// C-H bonds range from 106-112pm
-				else if (atom1.getAtomType().equals("C") && atom2.getAtomType().equals("H") && distance <= 1.12){
+				else if (atom1.getAtomType().equals("C") && atom2.getAtomType().equals("H") && distance <= 112){
 					bond = new Bond(atom1, atom2);
 					bondList.add(bond);
 					addToBondsList(atom1, atom2);
@@ -80,7 +80,7 @@ public class Molecule {
 				
 				// check if distance is right for a O-H bond
 				// O-H bond is approximately 96pm
-				else if (atom1.getAtomType().equals("O") && atom2.getAtomType().equals("H") && distance <= 0.96){
+				else if (atom1.getAtomType().equals("O") && atom2.getAtomType().equals("H") && distance <= 96){
 					bond = new Bond(atom1, atom2);
 					bondList.add(bond);
 					addToBondsList(atom1, atom2);
