@@ -202,7 +202,7 @@ public class PDB {
 				
 				
 			}
-			System.out.print(sb.toString());
+			//System.out.print(sb.toString());
 			writer.write(sb.toString());
 			writer.write("END");
 			writer.close();
