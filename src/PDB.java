@@ -157,7 +157,9 @@ public class PDB {
 	
 	public static void writeToPDB(ArrayList<Atom> atoms){
 		
-		String line = null;
+		//more efficient way of building strings
+		StringBuilder sb = new StringBuilder();
+		
 		Atom currentAtom;
 		
 		Scanner in = new Scanner(System.in);
@@ -177,32 +179,32 @@ public class PDB {
 			
 			BufferedWriter writer = new BufferedWriter(fw);
 			
-			writer.write("REMARK minimized generated coordinate pdb file"); //initial opening line on PDB file
+			sb.append("REMARK minimized generated coordinate pdb file " + System.getProperty("line.separator")); //initial opening line on PDB file
 			
 			for (int i = 0; i < atoms.size(); i++){
 				currentAtom = atoms.get(i);
-				line = line.concat(String.format("%-9s", currentAtom.getPart1())); //ATOM and 5 spaces
-				line = line.concat(String.format("%2s", currentAtom.getID())); //right justified
-				line = line.concat("  "); //2 spaces
-				line = line.concat(String.format("%4-s", currentAtom.getPart3())); //The atom and its number plus and 1 or 2 spaces (left justified)
-				line = line.concat(String.format("%-8s", currentAtom.getPart4())); //AMAN and 4 spaces
-				line = line.concat(String.format("%-7s", currentAtom.getPart5())); //Some number and 6 spaces
-				line = line.concat(String.format("%6s", currentAtom.getX())); //x-coordinate, right justified
-				line = line.concat("  "); //2 spaces
-				line = line.concat(String.format("%6s", currentAtom.getY())); //y-coordinate, right justified
-				line = line.concat("  "); //2 spaces
-				line = line.concat(String.format("%6s", currentAtom.getZ())); //z-coordinate, right justified
-				line = line.concat("  "); //2 spaces
-				line = line.concat(String.format("%-6s", currentAtom.getPart9())); //The element and 2 spaces
-				line = line.concat(String.format("%-10s", currentAtom.getPart10())); //The element and 6 spaces
-				line = line.concat(String.format("%-6s", currentAtom.getPart11())); //The element (CARB) and 1 space
-				line = line.concat(currentAtom.getAtomType());
+				sb.append(String.format("%-9s", currentAtom.getPart1())); //ATOM and 5 spaces
+				sb.append(String.format("%2s", currentAtom.getID())); //right justified
+				sb.append("  "); //2 spaces
+				sb.append(String.format("%-4s", currentAtom.getPart3())); //The atom and its number plus and 1 or 2 spaces (left justified)
+				sb.append(String.format("%-8s", currentAtom.getPart4())); //AMAN and 4 spaces
+				sb.append(String.format("%-7s", currentAtom.getPart5())); //Some number and 6 spaces
+				sb.append(String.format("%6s", currentAtom.getX())); //x-coordinate, right justified
+				sb.append("  "); //2 spaces
+				sb.append(String.format("%6s", currentAtom.getY())); //y-coordinate, right justified
+				sb.append("  "); //2 spaces
+				sb.append(String.format("%6s", currentAtom.getZ())); //z-coordinate, right justified
+				sb.append("  "); //2 spaces
+				sb.append(String.format("%-6s", currentAtom.getPart9())); //The element and 2 spaces
+				sb.append(String.format("%-10s", currentAtom.getPart10())); //The element and 6 spaces
+				sb.append(String.format("%-6s", currentAtom.getPart11())); //The element (CARB) and 1 space
+				sb.append(currentAtom.getAtomType() + System.getProperty("line.separator"));
 				
-				System.out.println(line);
-				writer.write(line);
+				
 			}
-			
-			writer.write("end");
+			System.out.print(sb.toString());
+			writer.write(sb.toString());
+			writer.write("END");
 			writer.close();
 			System.out.println("Done");
 		} catch (IOException e) {
