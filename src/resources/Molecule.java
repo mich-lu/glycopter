@@ -26,12 +26,24 @@ public class Molecule {
 		distance = 0;
 		bondList = new ArrayList<Bond>();
 		dihedralList = new ArrayList<DihedralAngle>();
+		interactionList = new ArrayList<Interaction>();
 		atoms = input;
 		bond = null;
 		atom1 = null;
 		atom2 = null;
+		
+		System.out.println("Identifying the bonds...");
 		identifyBonds(input);
+		
+		for (Bond b: bondList ){
+			System.out.println(b);
+		}
+		
+		System.out.println();
+		System.out.println("*****************************************************");
+		System.out.println("Identifying the Dihedral Angles...");
 		identifyDihedrals(input);
+		
 		/*
 		System.out.println("atoms");
 		for (Atom a: atoms ){
@@ -42,10 +54,12 @@ public class Molecule {
 			System.out.println(b);
 		}
 		*/
-		System.out.println("dihedrals");
+
 		for (DihedralAngle d: dihedralList ){
 			System.out.println(d);
 		}
+		
+		System.out.println();
 		
 	}
 	
@@ -103,6 +117,7 @@ public class Molecule {
 				 * for the non-bonding energy calculations
 				 */
 				else{
+					
 					interaction = new Interaction(atom1, atom2, distance);
 					interactionList.add(interaction);
 				}

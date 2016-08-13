@@ -37,11 +37,19 @@ public class PDB {
 		readFromPDB(); //load the atoms and all the information associated with each atom
 		Molecule mol = new Molecule(atomList); //create the molecule object
 		//calculate the energy of the molecule
+		System.out.println();
+		System.out.println("***************************************************************");
 		double initialEnergy = Optimum.calculateTotalEnergy();
+		System.out.println();
+		System.out.println("***************************************************************");
 		System.out.println("The current energy of the molecule is: " + initialEnergy);
+		System.out.println();
+		System.out.println("***************************************************************");
 		//minimize the energy of the molecule
 		double finalEnergy = Optimum.steepestDescent((float) 0.5, 2);
 		System.out.println("The minimized energy of the molecule is: " + initialEnergy);
+		System.out.println();
+		System.out.println("***************************************************************");
 		writeToPDB(atomList); //output the new molecule representation to PDB
 		
 	}
