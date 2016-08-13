@@ -19,6 +19,7 @@ import resources.Atom;
 import resources.Carbon;
 import resources.Hydrogen;
 import resources.Molecule;
+import resources.Optimum;
 import resources.Oxygen;
 
 
@@ -35,8 +36,20 @@ public class PDB {
 	public static void main(String[] args) throws IOException{
 		readFromPDB(); //load the atoms and all the information associated with each atom
 		Molecule mol = new Molecule(atomList); //create the molecule object
-		//calculate the energy of the moleceule
+		//calculate the energy of the molecule
+		System.out.println();
+		System.out.println("***************************************************************");
+		double initialEnergy = Optimum.calculateTotalEnergy();
+		System.out.println();
+		System.out.println("***************************************************************");
+		System.out.println("The current energy of the molecule is: " + initialEnergy);
+		System.out.println();
+		System.out.println("***************************************************************");
 		//minimize the energy of the molecule
+		double finalEnergy = Optimum.steepestDescent((float) 0.5, 2);
+		System.out.println("The minimized energy of the molecule is: " + initialEnergy);
+		System.out.println();
+		System.out.println("***************************************************************");
 		writeToPDB(atomList); //output the new molecule representation to PDB
 		
 	}
@@ -50,8 +63,8 @@ public class PDB {
 		
 		//get filename from user
 		filename = scan.nextLine();
-		System.out.println(filename)
-;		
+		//System.out.println(filename);		
+		
 		//read in file
 		BufferedReader reader = new BufferedReader(new FileReader(filename));
 		try{
@@ -77,13 +90,13 @@ public class PDB {
 		    	//split by any whitespaces
 		    	elements = line.split("\\s+");
 		    	
-		    	//*
-		    	 //* ***************************
+		    	/*
+		    	 * ***************************
 		    	for (String i: elements){
 		    		System.out.print(i + " ");
 		    	}
-		    	//********************************
-		    	//*/
+		    	********************************
+		    	*/
 		    	
 		    	//System.out.println();
 		    	

@@ -37,4 +37,12 @@ public class Interaction {
 	public String toString(){
 		return "Non-bonding interaction ID: " + interactionID + "atom1: " + atom1.id + ", atom2: " + atom2.id; 
 	}
+	
+	public Atom getAtom1(){
+		return atom1;
+	}
+	
+	public Atom getAtom2(){
+		return atom2;
+	}
 }

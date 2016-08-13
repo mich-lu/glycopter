@@ -33,6 +33,6 @@ public class Bond {
 	}
 	
 	public String toString(){
-		return "ID: " + bondID + "atom1: " + atom1.id + ", atom2: " + atom2.id; 
+		return "ID: " + bondID + " atom1: " + atom1.id + ", atom2: " + atom2.id; 
 	}
 }
