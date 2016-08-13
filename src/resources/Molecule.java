@@ -15,8 +15,8 @@ public class Molecule {
 	double distance;
 	ArrayList<Atom> atoms;
 	ArrayList<Bond> bondList;
-	ArrayList<Interaction> interactionList;
-	ArrayList<DihedralAngle> dihedralList;
+	static ArrayList<Interaction> interactionList;
+	static ArrayList<DihedralAngle> dihedralList;
 	Bond bond;
 	Interaction interaction;
 	Atom atom1;
