@@ -63,7 +63,7 @@ public class Molecule {
 		
 	}
 	
-	// I wasn't sure how we check what type of atom it is (Will need to look at Michelle's code for that)
+	// I wasn't sure how we check what type of atom it is 
 	public void identifyBonds(ArrayList<Atom> atoms){
 		
 		for (int i = 0; i < (atoms.size() - 1); i++){
