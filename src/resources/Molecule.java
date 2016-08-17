@@ -32,6 +32,7 @@ public class Molecule {
 		atom1 = null;
 		atom2 = null;
 		
+		System.out.println("number of atoms in molecule = " + atoms.size());
 		System.out.println("Identifying the bonds...");
 		identifyBonds(input);
 		
@@ -40,6 +41,7 @@ public class Molecule {
 		}
 		
 		System.out.println();
+		System.out.println("number of bonds calculated = " + bondList.size());
 		System.out.println("*****************************************************");
 		System.out.println("Identifying the Dihedral Angles...");
 		identifyDihedrals(input);
@@ -60,10 +62,16 @@ public class Molecule {
 		}
 		
 		System.out.println();
-		
+		System.out.println("number of dihedral angles calculated = " + dihedralList.size());
 	}
 	
-	// I wasn't sure how we check what type of atom it is (Will need to look at Michelle's code for that)
+	/*
+	 * Used method used by RasMol in determining bonds in molecules with less than 255 atoms:
+	 * 1) If (atoms + heteroatoms) is less than or equal to 255, a more time-consuming algorithm is employed. This algorithm can be 
+	 * forced on any loaded structure with the command connect true. Two atoms are considered bonded when the distance between them 
+	 * is between 0.4 Angstroms and (the sum of their covalent radii plus 0.56 Angstroms).
+	 * Source: https://www.umass.edu/microbio/rasmol/rasbonds.htm
+	 */
 	public void identifyBonds(ArrayList<Atom> atoms){
 		
 		for (int i = 0; i < (atoms.size() - 1); i++){
@@ -79,7 +87,7 @@ public class Molecule {
 				// check if distance is right for a C-C bond
 				// C-C bonds range from 1.20-1.54 Angstrom
 
-				if (atom1.getAtomType().equals("C") && atom2.getAtomType().equals("C") && distance <= 1.54){
+				if (atom1.getAtomType().equals("C") && atom2.getAtomType().equals("C") && distance >= 0.4 && distance <= (0.72 + 0.72 + 0.56)){
 					bond = new Bond(atom1, atom2);
 					bondList.add(bond);
 					addToBondsList(atom1, atom2);
@@ -87,7 +95,7 @@ public class Molecule {
 				
 				// check if distance is right for a C-O bond
 				// C-O bonds range from 1.43-2.15 Angstrom
-				else if (atom1.getAtomType().equals("C") && atom2.getAtomType().equals("O") && distance <= 2.15){
+				else if (atom1.getAtomType().equals("C") && atom2.getAtomType().equals("O") && distance >= 0.4 && distance <= (0.72 + 0.68 + 0.56)){
 			
 
 					bond = new Bond(atom1, atom2);
@@ -97,8 +105,7 @@ public class Molecule {
 				
 				// check if distance is right for a C-H bond
 				// C-H bonds range from 1.06-1.12 Angstrom
-
-				else if (atom1.getAtomType().equals("C") && atom2.getAtomType().equals("H") && distance <= 1.12){
+				else if (atom1.getAtomType().equals("C") && atom2.getAtomType().equals("H") && distance >= 0.4 && distance <= (0.72 + 0.32 + 0.56)){
 					bond = new Bond(atom1, atom2);
 					bondList.add(bond);
 					addToBondsList(atom1, atom2);
@@ -106,8 +113,7 @@ public class Molecule {
 				
 				// check if distance is right for a O-H bond
 				// O-H bond is approximately 0.96 Angstrom
-
-				else if (atom1.getAtomType().equals("O") && atom2.getAtomType().equals("H") && distance <= 0.96){
+				else if (atom1.getAtomType().equals("O") && atom2.getAtomType().equals("H") && distance >= 0.4 && distance <= (0.68 + 0.32 + 0.56)){
 					bond = new Bond(atom1, atom2);
 					bondList.add(bond);
 					addToBondsList(atom1, atom2);
