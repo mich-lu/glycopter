@@ -44,24 +44,51 @@ public class Optimum {
 		
 		System.out.println("Calculating Non-bonded Energy...");
 		
-		double minRadius=0; //min intersection radius
-		double radius=0;   //distance between two atoms
-		double charge1=0;  //charge of atom1
-		double charge2=0;  //charge of atom2
+		double epsilon = 0;
+		double minRadius = 0; //min intersection radius
+		double radius = 0;   //distance between two atoms
 		
-		
-		double nEnergy =0;
+		double nEnergy = 0; //total non-bonded energy
 		
 		for(Interaction non: Molecule.interactionList){
-		
-		//calculate the radii and charges etc.
-		
-		radius= non.distance; 
-		//nEnergy+= (Math.pow((minRadius/radius), 12) - 2*Math.pow((minRadius/radius), 6)) + (charge1*charge2)/(eConstant*radius);
-		
-		
+			// get appropriate constants
+			Double[] constants1 = getConstants(non.atom1);
+			Double[] constants2 = getConstants(non.atom2);
+			
+			epsilon = constants1[0] + constants2[0];
+			minRadius = constants1[1] + constants2[1];
+			radius= non.distance; 
+			
+			// get energy by substituting into formula
+			nEnergy = epsilon*(Math.pow((minRadius/radius), 12) - 2*Math.pow((minRadius/radius), 6));
 		}
+	
 		return nEnergy;
+	}
+		
+	public static Double[] getConstants(Atom atom){
+		Double[] constants = new Double[2]; // [epsilon, minRadius]
+		
+		switch(atom.atomType){
+			case "C":
+				constants[0] = -0.032;
+				constants[1] = 2.0;
+				break;
+			case "O":
+				constants[0] = -0.12;
+				constants[1] = 1.7;
+				break;
+			case "O5":
+				constants[0] = -0.1;
+				constants[1] = 1.65;
+				break;
+			case "H":
+				constants[0] = -0.045;
+				constants[1] = 1.34;
+				break;
+		}
+		
+		return constants;
 	}
 	
 	/*fixed-length steepest descent method
