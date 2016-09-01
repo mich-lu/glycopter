@@ -29,7 +29,7 @@ public class PDB {
 	private static String fileOutName;
 	static ArrayList<Atom> atomList = new ArrayList<Atom>();
 	protected static Atom atom;
-	static String part1, part3, part4, part5, part9, part10, part11, atomType;//These are all the aspects in the PDB file that need to be the same in the output, and so need to be associated with each atom.
+	static String part1, atomAndNum, part4, part5, part9, part10, part11, atomType;//These are all the aspects in the PDB file that need to be the same in the output, and so need to be associated with each atom.
 	static int ID;
 	static double xPos, yPos, zPos;
 	
@@ -103,7 +103,7 @@ public class PDB {
 		    	//Get the elements of PDB associated with each atom
 		    	part1 = elements[0];
 		    	ID = Integer.parseInt(elements[1]); // Second element is the ID
-		    	part3 = elements[2]; //3rd element is the atom with it's number in the molecule
+		    	atomAndNum = elements[2]; //3rd element is the atom with it's number in the molecule
 		    	part4 = elements[3]; //4th element in the PDB file (AMAN)
 		    	part5 = elements[4]; //a number associated with the atom
 		    	xPos = Double.parseDouble(elements[5]); //the x position of the atom
@@ -117,22 +117,22 @@ public class PDB {
 		    	//create atoms by atom type
 		    	switch(atomType){
 		    	case "C": 
-		    		atom = new Carbon(ID, xPos, yPos, zPos);
+		    		atom = new Carbon(ID, xPos, yPos, zPos, atomAndNum);
 		    		atomList.add(atom);
 		    		break;
 		    		
 		    	case "H":
-		    		atom = new Hydrogen(ID, xPos, yPos, zPos);
+		    		atom = new Hydrogen(ID, xPos, yPos, zPos, atomAndNum);
 		    		atomList.add(atom);
 		    		break;
 		    		
 		    	case "O": 
-		    		atom = new Oxygen(ID, xPos, yPos, zPos);
+		    		atom = new Oxygen(ID, xPos, yPos, zPos, atomAndNum);
 		    		atomList.add(atom);
 		    		break;
 		    	}	
 		    	
-		    	atom.addInformation(part1, part3, part4, part5, part9, part10, part11);
+		    	atom.addInformation(part1, part4, part5, part9, part10, part11);
 		    
 		    }
 		    
@@ -186,7 +186,7 @@ public class PDB {
 				sb.append(String.format("%-9s", currentAtom.getPart1())); //ATOM and 5 spaces
 				sb.append(String.format("%2s", currentAtom.getID())); //right justified
 				sb.append("  "); //2 spaces
-				sb.append(String.format("%-4s", currentAtom.getPart3())); //The atom and its number plus and 1 or 2 spaces (left justified)
+				sb.append(String.format("%-4s", currentAtom.getAtomAndNum())); //The atom and its number plus and 1 or 2 spaces (left justified)
 				sb.append(String.format("%-8s", currentAtom.getPart4())); //AMAN and 4 spaces
 				sb.append(String.format("%-7s", currentAtom.getPart5())); //Some number and 6 spaces
 				sb.append(String.format("%6s", currentAtom.getX())); //x-coordinate, right justified

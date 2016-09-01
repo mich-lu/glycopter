@@ -11,6 +11,7 @@ public class DihedralAngle{
 	
 	double angle;
 	Atom a1, a2, a3, a4;
+	public static Double dihedralAngleE;
 
 	public DihedralAngle(Atom atom1, Atom atom2, Atom atom3, Atom atom4){
 		a1 = atom1;
@@ -59,5 +60,98 @@ public class DihedralAngle{
 	
 	public String toString(){
 		return "Angle: " + angle + ", atom1: " + a1.id + ", atom2: " + a2.id + ", atom3: " + a3.id + ", atom4: " + a4.id; 
+	}
+	
+	/*
+	 * This method is hardcoded to calculate the energy of a dihedral angle consisting of 4 atoms because each set of 4
+	 * atoms has different values for the force constant, value of n, and the phase angle. These are literature values
+	 * that are known.
+	 */
+	public double calculateAngleEnergy(Atom atom1, Atom atom2, Atom atom3, Atom atom4){
+		String atomsInvolved = atom1.getAtomType() + atom2.getAtomType() + atom3.getAtomType() + atom4.getAtomType();
+		switch(atomsInvolved){
+		
+		//dEnergy+= k * (1 + Math.cos(n*torAngle-phaseAngle));
+		
+		case("CCCC"):
+			
+			dihedralAngleE = 0.19*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4) - 180));
+			break;
+		
+		case("CCCO"):
+			dihedralAngleE = 0.20*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4)));
+			break;
+		
+		case("CCCO5"):
+			
+			dihedralAngleE = 0.31*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4) - 180));
+			break;
+		
+		case("CCCH"):
+			dihedralAngleE = 0.20*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4)));
+			break;
+		
+		case("CCO5C"):
+			dihedralAngleE = 0.20*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4)));
+			break;
+		
+		case("CCOC"):
+			dihedralAngleE = 0.20*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4)));
+			break;
+		
+		case("CCOH"):
+			dihedralAngleE = 0.18*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4)));
+			break;
+		
+		case("COCO"):
+			dihedralAngleE = 0.41*(1 + Math.cos(1*calculateAngle(atom1, atom2, atom3, atom4) - 180));
+			break;
+		
+		case("COCO5"):
+			dihedralAngleE = 0.14*(1 + Math.cos(1*calculateAngle(atom1, atom2, atom3, atom4)))
+			+ 0.97*(1 + Math.cos(2*calculateAngle(atom1, atom2, atom3, atom4))) 
+			+ 0.11*(3 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4) - 180));
+			break;
+		
+		case("CO5CO"):
+			dihedralAngleE = 0.62*(1 + Math.cos(1*calculateAngle(atom1, atom2, atom3, atom4)))
+			+ 1.54*(1 + Math.cos(2*calculateAngle(atom1, atom2, atom3, atom4)))
+			+ 0.48*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4)));
+			break;
+		
+		case("COCH"):
+			dihedralAngleE = 0.284*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4)));
+			break;
+		
+		case("CO5CH"):
+			dihedralAngleE = 0.284*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4)));
+			break;
+		
+		case("OCCO"):
+			dihedralAngleE = 2.65*(1 + Math.cos(1*calculateAngle(atom1, atom2, atom3, atom4) - 180))
+			+ 0*(1 + Math.cos(2*calculateAngle(atom1, atom2, atom3, atom4) - 180)) //NB CHECK THIS LINE (Kchi is zero?)
+			+ 0.13*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4) - 180));
+			break;
+		
+		case("OCCO5"):
+			dihedralAngleE = 0.36*(1 + Math.cos(1*calculateAngle(atom1, atom2, atom3, atom4) - 180))
+			+ 0.16*(1 + Math.cos(2*calculateAngle(atom1, atom2, atom3, atom4)))
+			+ 1.01*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4)));
+			break;
+		
+		case("OCCH"):
+			dihedralAngleE = 0.14*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4)));
+			break;
+		
+		case("O5CCH"):
+			dihedralAngleE = 0.20*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4)));
+			break;
+		
+		case("HCCH"):
+			dihedralAngleE = 0.20*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4)));
+			break;
+		}
+		
+		return dihedralAngleE;
 	}
 }

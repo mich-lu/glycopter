@@ -12,29 +12,29 @@ public class Optimum {
 	}
 	
 	
-	//calculates the total energy of all the dihedrals
+	/*
+	 * calculates the total energy of all the dihedrals by looping through the list of dihedral angles, calculating the individual
+	 * energies of each angle, and adding them to the total list
+	 */
+	
 	public static double calculateDihedralEnergy(){
 			
 		System.out.println("Calculating Dihedral Energy...");
 		
-		//force field parameters
-		double k=0;  //force constant
-		int n=1; 		//peridocity
-		double torAngle=0;  //torsional angle
-		double phaseAngle=0;  
-		
 		// sum up all the energies of all the dihedrals
-		double dEnergy=0;
+		double dihedralEnergy=0;
+		double angleEnergy = 0;
 		
+		// Loop to calculate the energy of each individual dihedral angle in the molecule and add it to the total energy
 		for(DihedralAngle di: Molecule.dihedralList){
 			
-			//insert method to find all force parameters
-			torAngle = di.angle;
+			angleEnergy = di.calculateAngleEnergy(di.a1, di.a2, di.a3, di.a4);
 			
-			//dEnergy+= k * (1 + Math.cos(n*torAngle-phaseAngle));
+			dihedralEnergy += angleEnergy;
 		}
 		
-		return dEnergy;
+		System.out.println(dihedralEnergy);
+		return dihedralEnergy;
 		
 	}
 	
