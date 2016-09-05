@@ -34,6 +34,7 @@ public class PDB {
 	static double xPos, yPos, zPos;
 	
 	public static void main(String[] args) throws IOException{
+		filename = args[0];
 		readFromPDB(); //load the atoms and all the information associated with each atom
 		Molecule mol = new Molecule(atomList); //create the molecule object
 		//calculate the energy of the molecule
@@ -56,14 +57,14 @@ public class PDB {
 	
 	public static void readFromPDB() throws IOException{
 		
-		Scanner scan = new Scanner(System.in);
-		
-		//remember that this must be Console.WriteLine
-		System.out.println("Please enter the file name: ");
-		
-		//get filename from user
-		filename = scan.nextLine();
-		//System.out.println(filename);		
+//		Scanner scan = new Scanner(System.in);
+//		
+//		//remember that this must be Console.WriteLine
+//		System.out.println("Please enter the file name: ");
+//		
+//		//get filename from user
+//		filename = scan.nextLine();
+//		//System.out.println(filename);		
 		
 		//read in file
 		BufferedReader reader = new BufferedReader(new FileReader(filename));
