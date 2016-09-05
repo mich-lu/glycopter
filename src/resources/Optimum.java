@@ -62,7 +62,7 @@ public class Optimum {
 			// get energy by substituting into formula
 			nEnergy = epsilon*(Math.pow((minRadius/radius), 12) - 2*Math.pow((minRadius/radius), 6));
 		}
-	
+		System.out.println(nEnergy);
 		return nEnergy;
 	}
 		
