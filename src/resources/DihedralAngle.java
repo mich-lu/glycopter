@@ -69,87 +69,84 @@ public class DihedralAngle{
 	 */
 	public double calculateAngleEnergy(Atom atom1, Atom atom2, Atom atom3, Atom atom4){
 		String atomsInvolved = atom1.getAtomType() + atom2.getAtomType() + atom3.getAtomType() + atom4.getAtomType();
-		switch(atomsInvolved){
+		
 		
 		//dEnergy+= k * (1 + Math.cos(n*torAngle-phaseAngle));
 		
-		case("CCCC"):
-			
+		if (atomsInvolved.equals("CCCC")){
 			dihedralAngleE = 0.19*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4) - 180));
-			break;
+		}
 		
-		case("CCCO"):
+		if (atomsInvolved.equals("CCCO") || atomsInvolved.equals("OCCC")){
 			dihedralAngleE = 0.20*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4)));
-			break;
+		}
 		
-		case("CCCO5"):
-			
+		if (atomsInvolved.equals("CCCO5") || atomsInvolved.equals("O5CCC")){
 			dihedralAngleE = 0.31*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4) - 180));
-			break;
+		}
 		
-		case("CCCH"):
+		if (atomsInvolved.equals("CCCH") || atomsInvolved.equals("HCCC")){
 			dihedralAngleE = 0.20*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4)));
-			break;
+		}
 		
-		case("CCO5C"):
+		if (atomsInvolved.equals("CCO5C") || atomsInvolved.equals("CO5CC")){
 			dihedralAngleE = 0.20*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4)));
-			break;
+		}
 		
-		case("CCOC"):
+		if (atomsInvolved.equals("CCOC") || atomsInvolved.equals("COCC")){
 			dihedralAngleE = 0.20*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4)));
-			break;
+		}
 		
-		case("CCOH"):
+		if (atomsInvolved.equals("CCOH") || atomsInvolved.equals("HOCC")){
 			dihedralAngleE = 0.18*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4)));
-			break;
+		}
 		
-		case("COCO"):
+		if (atomsInvolved.equals("COCO") || atomsInvolved.equals("OCOC")){
 			dihedralAngleE = 0.41*(1 + Math.cos(1*calculateAngle(atom1, atom2, atom3, atom4) - 180));
-			break;
+		}
 		
-		case("COCO5"):
+		if (atomsInvolved.equals("COCO5") || atomsInvolved.equals("O5COC")){
 			dihedralAngleE = 0.14*(1 + Math.cos(1*calculateAngle(atom1, atom2, atom3, atom4)))
 			+ 0.97*(1 + Math.cos(2*calculateAngle(atom1, atom2, atom3, atom4))) 
 			+ 0.11*(3 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4) - 180));
-			break;
+		}
 		
-		case("CO5CO"):
+		if (atomsInvolved.equals("CO5CO") || atomsInvolved.equals("OCO5C")){
 			dihedralAngleE = 0.62*(1 + Math.cos(1*calculateAngle(atom1, atom2, atom3, atom4)))
 			+ 1.54*(1 + Math.cos(2*calculateAngle(atom1, atom2, atom3, atom4)))
 			+ 0.48*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4)));
-			break;
+		}
 		
-		case("COCH"):
+		if (atomsInvolved.equals("COCH") || atomsInvolved.equals("HCOC")){
 			dihedralAngleE = 0.284*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4)));
-			break;
+		}
 		
-		case("CO5CH"):
+		if (atomsInvolved.equals("CO5CH") || atomsInvolved.equals("HCO5C")){
 			dihedralAngleE = 0.284*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4)));
-			break;
+		}
 		
-		case("OCCO"):
+		if (atomsInvolved.equals("OCCO")){
 			dihedralAngleE = 2.65*(1 + Math.cos(1*calculateAngle(atom1, atom2, atom3, atom4) - 180))
 			+ 0*(1 + Math.cos(2*calculateAngle(atom1, atom2, atom3, atom4) - 180)) //NB CHECK THIS LINE (Kchi is zero?)
 			+ 0.13*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4) - 180));
-			break;
+		}
 		
-		case("OCCO5"):
+		if (atomsInvolved.equals("OCCO5") || atomsInvolved.equals("O5CCO")){
 			dihedralAngleE = 0.36*(1 + Math.cos(1*calculateAngle(atom1, atom2, atom3, atom4) - 180))
 			+ 0.16*(1 + Math.cos(2*calculateAngle(atom1, atom2, atom3, atom4)))
 			+ 1.01*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4)));
-			break;
+		}
 		
-		case("OCCH"):
+		if (atomsInvolved.equals("OCCH") || atomsInvolved.equals("HCCO")){
 			dihedralAngleE = 0.14*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4)));
-			break;
+		}
 		
-		case("O5CCH"):
+		if (atomsInvolved.equals("O5CCH") || atomsInvolved.equals("HCCO5")){
 			dihedralAngleE = 0.20*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4)));
-			break;
+		}
 		
-		case("HCCH"):
+		if (atomsInvolved.equals("HCCH")){
 			dihedralAngleE = 0.20*(1 + Math.cos(3*calculateAngle(atom1, atom2, atom3, atom4)));
-			break;
 		}
 		
 		return dihedralAngleE;
