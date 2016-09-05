@@ -29,6 +29,24 @@ public abstract class Atom {
 		return id;
 	}
 	
+	//returns a list of the points
+	public double[] getXYZ(){
+			double[] xyz = new double[3];
+			xyz[0] = xPos;
+			xyz[1] = yPos;
+			xyz[2] = zPos;
+			return xyz;
+			
+	}
+		
+		//sets a list of the points
+	public void setXYZ(Double[] xyz){
+			xPos = xyz[0];
+	        yPos = xyz[1];
+	        zPos = xyz[2];
+	}
+
+	
 	public double getX(){
 		return xPos;
 	}
