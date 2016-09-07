@@ -116,4 +116,7 @@ public abstract class Atom {
 	public ArrayList<Atom> getBonds(){
 		return bondedToList;
 	}
+	public String toString(){
+		return "Atom ID: " + id;
+	}
 }
