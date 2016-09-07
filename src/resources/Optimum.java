@@ -27,7 +27,7 @@ public class Optimum {
 		
 		// Loop to calculate the energy of each individual dihedral angle in the molecule and add it to the total energy
 		for(DihedralAngle di: Molecule.dihedralList){
-			
+			System.out.println("Di angle being calculated: "+di.a1+di.a2+di.a3+ di.a4);
 			angleEnergy = di.calculateAngleEnergy(di.a1, di.a2, di.a3, di.a4);
 			
 			dihedralEnergy += angleEnergy;
@@ -60,7 +60,9 @@ public class Optimum {
 			radius= non.distance; 
 			
 			// get energy by substituting into formula
-			nEnergy = epsilon*(Math.pow((minRadius/radius), 12) - 2*Math.pow((minRadius/radius), 6));
+			//nEnergy = epsilon*(Math.pow((minRadius/radius), 12) - 2*Math.pow((minRadius/radius), 6));
+			nEnergy = constants1[0]*(Math.pow((constants1[1]/radius), 12) - 2*Math.pow((constants1[1]/radius), 6))+
+					  constants2[0]*(Math.pow((constants2[1]/radius), 12) - 2*Math.pow((constants2[1]/radius), 6));
 		}
 		System.out.println(nEnergy);
 		return nEnergy;

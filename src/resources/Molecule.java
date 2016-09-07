@@ -17,6 +17,7 @@ public class Molecule {
 	ArrayList<Bond> bondList;
 	static ArrayList<Interaction> interactionList;
 	static ArrayList<DihedralAngle> dihedralList;
+	static ArrayList<Angle> angleList;
 	Bond bond;
 	Interaction interaction;
 	Atom atom1;
@@ -27,6 +28,7 @@ public class Molecule {
 		bondList = new ArrayList<Bond>();
 		dihedralList = new ArrayList<DihedralAngle>();
 		interactionList = new ArrayList<Interaction>();
+		angleList = new ArrayList<Angle>();
 		atoms = input;
 		bond = null;
 		atom1 = null;
@@ -43,6 +45,17 @@ public class Molecule {
 		System.out.println();
 		System.out.println("number of bonds calculated = " + bondList.size());
 		System.out.println("*****************************************************");
+		
+		System.out.println("Identifying the angles between bonds...");
+		identifyAngles(bondList);
+		for (Angle a: angleList ){
+			System.out.println(a);
+		}
+		System.out.println();
+		System.out.println("number of angles calculated = " + angleList.size());
+		System.out.println("*****************************************************");
+		
+		
 		System.out.println("Identifying the Dihedral Angles...");
 		identifyDihedrals(input);
 		
@@ -146,6 +159,30 @@ public class Molecule {
 						dihedral = new DihedralAngle(first, a2, a3, last);
 						dihedralList.add(dihedral);
 					}
+				}
+			}
+		}
+	}
+	
+	public void identifyAngles(ArrayList<Bond> bondList){
+		Angle bondPair;
+		Bond b1, b2;
+		for (int i = 0; i < (bondList.size() - 1); i++){
+			b1 = bondList.get(i);
+			
+			for (int j = i+1; j < bondList.size(); j++){
+				
+				b2 = bondList.get(j);
+				
+				if (b1.atom1 == b2.atom1 || b1.atom1 == b2.atom2){
+					bondPair = new Angle(b1, b2, b1.atom1);
+					angleList.add(bondPair);
+					continue;
+				}
+				if (b1.atom2 == b2.atom1 || b1.atom2 == b2.atom2){
+					bondPair = new Angle(b1, b2, b1.atom2);
+					angleList.add(bondPair);
+					continue;
 				}
 			}
 		}
