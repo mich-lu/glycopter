@@ -24,11 +24,16 @@ public class Optimum {
 		// sum up all the energies of all the dihedrals
 		double dihedralEnergy=0;
 		double angleEnergy = 0;
+		//double k=0;
+		//double n=0;
+		//double phaseAngle=0;
 		
 		// Loop to calculate the energy of each individual dihedral angle in the molecule and add it to the total energy
 		for(DihedralAngle di: Molecule.dihedralList){
-			System.out.println("Di angle being calculated: "+di.a1+di.a2+di.a3+ di.a4);
+			//System.out.println("Di angle being calculated: "+di.a1+di.a2+di.a3+ di.a4);
 			angleEnergy = di.calculateAngleEnergy(di.a1, di.a2, di.a3, di.a4);
+			
+			//angleEnergy = k * (1 + Math.cos(n*di.angle-phaseAngle));
 			
 			dihedralEnergy += angleEnergy;
 		}
@@ -97,45 +102,75 @@ public class Optimum {
 	 *return the potential energy after this step of minimization 
 	 */
 	
-	public static double steepestDescent(float stepSize, int noSteps){
+public static double steepestDescent(){
 		
 		System.out.println("Minimizing energy using Steepest Descent...");
 		
-		float gamma=stepSize; //mall number that forces the algorithm to make small jumps, value changes with algorithm using line search
-		float zero=0; //value that is close to zero
-		
-		
-		//iterate through the max no. of steps
-		for(int i =0; i<noSteps; i++){
+		//iterate through the dihedral angles to find the OH bonds
+		for( DihedralAngle di : Molecule.dihedralList){
 			
-			//calculate the derivative of the energy equation
-			double dummy = 1; //dummy parameter
-			double derivative = firstDerivative(dummy);
-			
-			//check if gradient is close to zero, if so minimum is found
-			if(derivative == zero){
-				break;
-			}
-			
+			if (di.a3 instanceof Oxygen &&  di.a4 instanceof Hydrogen){
 		
-			//else update x, y, z positions and recalculate angles
-			else{
-			//eg. atom.x = x - (gamma*derivative)
-				System.out.println("Updating atom positions and dihedral angles...");
+				//System.out.println(di.a3.atomType + " " + di.a4.atomType);
+				
+				
+				//do the steepest descent for that angle in a certain no. of steps
+				for(int i =0; i<50; i++){
+					
+					//calculate the derivative of the energy equation
+					double derivative = firstDerivative(di);
+					//System.out.println("Derivative = " + derivative);
+					
+					//check if gradient is close to zero or there was no change from the previous derivative, the minimum is found
+					if(derivative == 0.0000001 || di.angle < 0.0000001){
+						break;
+					}
+					
+					//else rotate the angle
+					else{
+						
+						double angle2rotate = di.angle - derivative;
+						
+						//find the normal between 3 points
+						double[] normal = Rotation.getNormal(di.a2.getXYZ(),di.a3.getXYZ(), di.a4.getXYZ());
+						
+						//get the current coordinates of the angle that you want to rotate
+						double [] oldXYZ = di.a4.getXYZ();
+						
+						//find the new coordinates about the stationary angle
+						double[] newXYZ = Rotation.getNewPointFromNormal(di.a3.getXYZ(), normal, angle2rotate, oldXYZ);
+						
+						//set the new coordinates
+						di.a4.setXYZ(newXYZ);
+						
+						//calculate updated dihedral angle
+						di.angle = DihedralAngle.calculateAngle(di.a1, di.a2, di.a3, di.a4);
+						
+					}
+				}
+				
 			}
 		}
 		
+		
 		System.out.println("Molecule is minimized.");
 		return calculateTotalEnergy();
+		
+		
+		
 	}
-	
+		
 	
 	// calculates the first derivative with parameters values
-	public static double firstDerivative(double value){
+	public static double firstDerivative(DihedralAngle di){
 		
-		System.out.println("Finding the first derivative...");
+		double k = DihedralAngle.getConstants(di)[0];
+		double n = DihedralAngle.getConstants(di)[1];
+		double phase = DihedralAngle.getConstants(di)[2];
 		
-		return value;
+		double derivative = -(n*k)*(Math.sin(n*di.angle + phase));
+		
+		return derivative;
 	}
 	
 	

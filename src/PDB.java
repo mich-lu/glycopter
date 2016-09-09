@@ -12,6 +12,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -34,7 +36,7 @@ public class PDB {
 	static double xPos, yPos, zPos;
 	
 	public static void main(String[] args) throws IOException{
-		filename = args[0];
+		//filename = args[0];
 		readFromPDB(); //load the atoms and all the information associated with each atom
 		Molecule mol = new Molecule(atomList); //create the molecule object
 		//calculate the energy of the molecule
@@ -47,8 +49,8 @@ public class PDB {
 		System.out.println();
 		System.out.println("***************************************************************");
 		//minimize the energy of the molecule
-		double finalEnergy = Optimum.steepestDescent((float) 0.5, 2);
-		System.out.println("The minimized energy of the molecule is: " + initialEnergy);
+		double finalEnergy = Optimum.steepestDescent();
+		System.out.println("The initial energy of the molecule was: " + initialEnergy + "\n" + "The minimized energy of the molecule is: " + finalEnergy);
 		System.out.println();
 		System.out.println("***************************************************************");
 		writeToPDB(atomList); //output the new molecule representation to PDB
@@ -57,14 +59,13 @@ public class PDB {
 	
 	public static void readFromPDB() throws IOException{
 		
-//		Scanner scan = new Scanner(System.in);
-//		
+		Scanner scan = new Scanner(System.in);
+		
 //		//remember that this must be Console.WriteLine
-//		System.out.println("Please enter the file name: ");
-//		
+		System.out.println("Please enter the file name: ");
+		
 //		//get filename from user
-//		filename = scan.nextLine();
-//		//System.out.println(filename);		
+		filename = scan.nextLine();	
 		
 		//read in file
 		BufferedReader reader = new BufferedReader(new FileReader(filename));
@@ -83,23 +84,9 @@ public class PDB {
 		    	else if( line.startsWith("END")){
 		    		break;}
 		    	
-		    	//Testing purposes
-		    	//************************
-		    	//System.out.println(line);
-		    	//*************************
-		    	
 		    	//split by any whitespaces
 		    	elements = line.split("\\s+");
 		    	
-		    	/*
-		    	 * ***************************
-		    	for (String i: elements){
-		    		System.out.print(i + " ");
-		    	}
-		    	********************************
-		    	*/
-		    	
-		    	//System.out.println();
 		    	
 		    	//Get the elements of PDB associated with each atom
 		    	part1 = elements[0];
@@ -136,14 +123,7 @@ public class PDB {
 		    	atom.addInformation(part1, part4, part5, part9, part10, part11);
 		    
 		    }
-		    
-		    /*
-		     * ******************************************
-		       	for (Atom j: atomList){
-		       		System.out.print(j.getID() + " ");
-		       	}
-		       	******************************************
-		      */ 	
+		    	
 		}
 		
 		catch(FileNotFoundException e){
@@ -152,8 +132,7 @@ public class PDB {
 			System.out.println("File does not exist.");
 		}
 		
-		
-		
+			
 	}
 	
 	public static void writeToPDB(ArrayList<Atom> atoms){
@@ -180,6 +159,10 @@ public class PDB {
 			
 			BufferedWriter writer = new BufferedWriter(fw);
 			
+			//round off the coordinates to 3 decimal places
+			DecimalFormat df = new DecimalFormat("#.###");
+			df.setRoundingMode(RoundingMode.CEILING);
+			
 			sb.append("REMARK minimized generated coordinate pdb file " + System.getProperty("line.separator")); //initial opening line on PDB file
 			
 			for (int i = 0; i < atoms.size(); i++){
@@ -190,11 +173,11 @@ public class PDB {
 				sb.append(String.format("%-4s", currentAtom.getAtomAndNum())); //The atom and its number plus and 1 or 2 spaces (left justified)
 				sb.append(String.format("%-8s", currentAtom.getPart4())); //AMAN and 4 spaces
 				sb.append(String.format("%-7s", currentAtom.getPart5())); //Some number and 6 spaces
-				sb.append(String.format("%6s", currentAtom.getX())); //x-coordinate, right justified
+				sb.append(String.format("%6s", df.format(currentAtom.getX()))); //x-coordinate, right justified
 				sb.append("  "); //2 spaces
-				sb.append(String.format("%6s", currentAtom.getY())); //y-coordinate, right justified
+				sb.append(String.format("%6s", df.format(currentAtom.getY()))); //y-coordinate, right justified
 				sb.append("  "); //2 spaces
-				sb.append(String.format("%6s", currentAtom.getZ())); //z-coordinate, right justified
+				sb.append(String.format("%6s", df.format(currentAtom.getZ()))); //z-coordinate, right justified
 				sb.append("  "); //2 spaces
 				sb.append(String.format("%-6s", currentAtom.getPart9())); //The element and 2 spaces
 				sb.append(String.format("%-10s", currentAtom.getPart10())); //The element and 6 spaces
@@ -203,7 +186,7 @@ public class PDB {
 				
 				
 			}
-			//System.out.print(sb.toString());
+	
 			writer.write(sb.toString());
 			writer.write("END");
 			writer.close();
