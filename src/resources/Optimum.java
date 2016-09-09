@@ -55,15 +55,14 @@ public class Optimum {
 			Double[] constants1 = getConstants(non.atom1);
 			Double[] constants2 = getConstants(non.atom2);
 			
-			epsilon = constants1[0] + constants2[0];
-			minRadius = constants1[1] + constants2[1];
+			epsilon = Math.sqrt(constants1[0]*constants2[0]);
+			minRadius = (constants1[1] + constants2[1])/2;
 			radius= non.distance; 
 			
 			// get energy by substituting into formula
-			//nEnergy = epsilon*(Math.pow((minRadius/radius), 12) - 2*Math.pow((minRadius/radius), 6));
-			nEnergy = constants1[0]*(Math.pow((constants1[1]/radius), 12) - 2*Math.pow((constants1[1]/radius), 6))+
-					  constants2[0]*(Math.pow((constants2[1]/radius), 12) - 2*Math.pow((constants2[1]/radius), 6));
-		}
+			nEnergy = epsilon*(Math.pow((minRadius/radius), 12) - 2*Math.pow((minRadius/radius), 6));
+			}
+		
 		System.out.println(nEnergy);
 		return nEnergy;
 	}
