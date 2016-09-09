@@ -21,7 +21,7 @@ public class DihedralAngle{
 		angle = calculateAngle(a1, a2, a3, a4);
 	}
 
-	public double calculateAngle(Atom A1, Atom A2, Atom A3, Atom A4){ // calculate by finding angle between 2 planes
+	public static double calculateAngle(Atom A1, Atom A2, Atom A3, Atom A4){ // calculate by finding angle between 2 planes
 		// determine planes:
 		// plane 1:
 		Double[] plane1 = calculatePlane(A1,A2,A3);
@@ -34,11 +34,12 @@ public class DihedralAngle{
 		
 		Double angleRad = Math.acos(cosAngle); // Radians
 		// convert to degrees;
-		Double angleDeg = Math.toDegrees(angleRad);
+		//Double angleDeg = Math.toDegrees(angleRad);
+		
 		return angleRad;
 	}
 	
-	public Double[] calculatePlane(Atom A1, Atom A2, Atom A3){
+	public static Double[] calculatePlane(Atom A1, Atom A2, Atom A3){
 		// calculate 2 vectors from 3 points
 		Double[] u = {A2.getX() - A1.getX(), A2.getY() - A1.getY(), A2.getZ() - A1.getZ()};
 		Double[] v = {A3.getX() - A1.getX(), A3.getY() - A1.getY(), A3.getZ() - A1.getZ()};
@@ -54,7 +55,7 @@ public class DihedralAngle{
 	}
 	
 	// method to take the square of the input
-	public double sq(double number){
+	public static double sq(double number){
 		return Math.pow(number,2);
 	}
 	
@@ -151,4 +152,22 @@ public class DihedralAngle{
 		
 		return dihedralAngleE;
 	}
+	
+	//return the constants for the dihedral angle energy calculation
+	public static double[] getConstants(DihedralAngle di){
+		
+		String atomsInvolved = di.a1.getAtomType() + di.a2.getAtomType() + di.a3.getAtomType() + di.a4.getAtomType();
+		
+		double[] constants = new double[3];
+		
+		if (atomsInvolved.equals("CCOH")){
+			constants[0] = 0.18;
+			constants[1] = 3;
+			constants[2] =0;
+		}
+		
+		return constants;
+					
+	}
+		
 }

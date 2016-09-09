@@ -12,18 +12,20 @@ import java.util.ArrayList;
 
 public class Molecule {
 
-	double distance;
 	ArrayList<Atom> atoms;
 	ArrayList<Bond> bondList;
-	static ArrayList<Interaction> interactionList;
+	static ArrayList<Interaction> interactionList; //non-bonded atoms
 	static ArrayList<DihedralAngle> dihedralList;
-	static ArrayList<Angle> angleList;
+	static ArrayList<Angle> angleList; //used for checking purposes, all the angles between bonds
+	
+	double distance; //distance between 2 atoms
 	Bond bond;
 	Interaction interaction;
 	Atom atom1;
 	Atom atom2;
 	
 	public Molecule(ArrayList<Atom> input){
+		
 		distance = 0;
 		bondList = new ArrayList<Bond>();
 		dihedralList = new ArrayList<DihedralAngle>();
@@ -36,6 +38,7 @@ public class Molecule {
 		
 		System.out.println("number of atoms in molecule = " + atoms.size());
 		System.out.println("Identifying the bonds...");
+		
 		identifyBonds(input);
 		
 		for (Bond b: bondList ){
@@ -57,25 +60,25 @@ public class Molecule {
 		
 		
 		System.out.println("Identifying the Dihedral Angles...");
+		
 		identifyDihedrals(input);
 		
-		/*
-		System.out.println("atoms");
-		for (Atom a: atoms ){
-			System.out.println(a.id);
-		}
-		System.out.println("bonds");
-		for (Bond b: bondList ){
-			System.out.println(b);
-		}
-		*/
-
 		for (DihedralAngle d: dihedralList ){
 			System.out.println(d);
 		}
 		
 		System.out.println();
 		System.out.println("number of dihedral angles calculated = " + dihedralList.size());
+		
+	}
+		/*
+		System.out.println("atoms");
+		for (Atom a: atoms ){
+			System.out.println(a.id);
+		}
+
+
+		
 	}
 	
 	/*
@@ -100,7 +103,7 @@ public class Molecule {
 				// check if distance is right for a C-C bond
 				// C-C bonds range from 1.20-1.54 Angstrom
 
-				if (atom1.getAtomType().equals("C") && atom2.getAtomType().equals("C") && distance >= 0.4 && distance <= (0.72 + 0.72 + 0.56)){
+				if (atom1 instanceof Carbon && atom2 instanceof Carbon  && distance >= 0.4 && distance <= (0.72 + 0.72 + 0.56)){
 					bond = new Bond(atom1, atom2);
 					bondList.add(bond);
 					addToBondsList(atom1, atom2);
@@ -108,7 +111,7 @@ public class Molecule {
 				
 				// check if distance is right for a C-O bond
 				// C-O bonds range from 1.43-2.15 Angstrom
-				else if (atom1.getAtomType().equals("C") && atom2.getAtomType().equals("O") && distance >= 0.4 && distance <= (0.72 + 0.68 + 0.56)){
+				else if (atom1 instanceof Carbon  && atom2 instanceof Oxygen && distance >= 0.4 && distance <= (0.72 + 0.68 + 0.56)){
 			
 
 					bond = new Bond(atom1, atom2);
@@ -118,7 +121,7 @@ public class Molecule {
 				
 				// check if distance is right for a C-H bond
 				// C-H bonds range from 1.06-1.12 Angstrom
-				else if (atom1.getAtomType().equals("C") && atom2.getAtomType().equals("H") && distance >= 0.4 && distance <= (0.72 + 0.32 + 0.56)){
+				else if (atom1 instanceof Carbon && atom2 instanceof Hydrogen && distance >= 0.4 && distance <= (0.72 + 0.32 + 0.56)){
 					bond = new Bond(atom1, atom2);
 					bondList.add(bond);
 					addToBondsList(atom1, atom2);
@@ -126,7 +129,7 @@ public class Molecule {
 				
 				// check if distance is right for a O-H bond
 				// O-H bond is approximately 0.96 Angstrom
-				else if (atom1.getAtomType().equals("O") && atom2.getAtomType().equals("H") && distance >= 0.4 && distance <= (0.68 + 0.32 + 0.56)){
+				else if (atom1 instanceof Oxygen  && atom2 instanceof Hydrogen && distance >= 0.4 && distance <= (0.68 + 0.32 + 0.56)){
 					bond = new Bond(atom1, atom2);
 					bondList.add(bond);
 					addToBondsList(atom1, atom2);

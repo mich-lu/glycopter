@@ -40,10 +40,10 @@ public abstract class Atom {
 	}
 		
 		//sets a list of the points
-	public void setXYZ(Double[] xyz){
-			xPos = xyz[0];
-	        yPos = xyz[1];
-	        zPos = xyz[2];
+	public void setXYZ(double[] newXYZ){
+			xPos = newXYZ[0];
+	        yPos = newXYZ[1];
+	        zPos = newXYZ[2];
 	}
 
 	
