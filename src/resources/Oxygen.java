@@ -20,7 +20,5 @@ public class Oxygen extends Atom{
 		else{
 			atomType="O"; 
 		}
-		
-		System.out.println(atomType);
 	}
 }

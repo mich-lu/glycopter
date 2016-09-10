@@ -35,7 +35,6 @@ public class DihedralAngle{
 		Double angleRad = Math.acos(cosAngle); // Radians
 		// convert to degrees;
 		//Double angleDeg = Math.toDegrees(angleRad);
-		
 		return angleRad;
 	}
 	
