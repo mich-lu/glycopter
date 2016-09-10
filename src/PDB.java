@@ -25,8 +25,7 @@ import resources.Oxygen;
 
 public class PDB {
 	
-	private static String filename;
-	private static String fileOutName;
+	private static String inputFile, filename, fileOutName;
 	static ArrayList<Atom> atomList = new ArrayList<Atom>();
 	protected static Atom atom;
 	static String part1, atomAndNum, part4, part5, part9, part10, part11, atomType;//These are all the aspects in the PDB file that need to be the same in the output, and so need to be associated with each atom.
@@ -34,8 +33,8 @@ public class PDB {
 	static double xPos, yPos, zPos;
 	
 	public static void main(String[] args) throws IOException{
-		filename = args[0];
-		readFromPDB(); //load the atoms and all the information associated with each atom
+		inputFile = args[0];
+		readFromPDB(inputFile); //load the atoms and all the information associated with each atom
 		Molecule mol = new Molecule(atomList); //create the molecule object
 		//calculate the energy of the molecule
 		System.out.println();
@@ -55,8 +54,8 @@ public class PDB {
 		
 	}
 	
-	public static void readFromPDB() throws IOException{
-		
+	public static void readFromPDB(String inputFile) throws IOException{
+		filename = inputFile;
 //		Scanner scan = new Scanner(System.in);
 //		
 //		//remember that this must be Console.WriteLine

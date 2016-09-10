@@ -35,7 +35,7 @@ public class DihedralAngle{
 		Double angleRad = Math.acos(cosAngle); // Radians
 		// convert to degrees;
 		Double angleDeg = Math.toDegrees(angleRad);
-		return angleDeg;
+		return angleRad;
 	}
 	
 	public Double[] calculatePlane(Atom A1, Atom A2, Atom A3){
