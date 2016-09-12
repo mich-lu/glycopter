@@ -12,11 +12,12 @@ import java.util.ArrayList;
 
 public class Molecule {
 
-	ArrayList<Atom> atoms;
+	static ArrayList<Atom> atoms;
 	ArrayList<Bond> bondList;
 	static ArrayList<Interaction> interactionList; //non-bonded atoms
 	static ArrayList<DihedralAngle> dihedralList;
-	static ArrayList<Angle> angleList; //used for checking purposes, all the angles between bonds
+	public static ArrayList<Angle> angleList; //used for checking purposes, all the angles between bonds
+	public static ArrayList<Angle> originalAngleList; //testing purposes
 	
 	double distance; //distance between 2 atoms
 	Bond bond;
@@ -33,6 +34,7 @@ public class Molecule {
 		dihedralList = new ArrayList<DihedralAngle>();
 		interactionList = new ArrayList<Interaction>();
 		angleList = new ArrayList<Angle>();
+		originalAngleList = angleList;
 		atoms = input;
 		bond = null;
 		atom1 = null;
@@ -44,9 +46,10 @@ public class Molecule {
 		
 		identifyBonds(input);
 		
-		for (Bond b: bondList ){
-			System.out.println(b);
-		}
+		// For testing
+//		for (Bond b: bondList ){
+//			System.out.println(b);
+//		}
 		
 		System.out.println();
 		System.out.println("number of bonds calculated = " + bondList.size());
@@ -54,9 +57,12 @@ public class Molecule {
 		
 		System.out.println("Identifying the angles between bonds...");
 		identifyAngles(bondList);
-		for (Angle a: angleList ){
-			System.out.println(a);
-		}
+		
+		// For testing
+//		for (Angle a: angleList ){
+//			System.out.println(a);
+//		}
+		
 		System.out.println();
 		System.out.println("number of angles calculated = " + angleList.size());
 		System.out.println("*****************************************************");
@@ -66,9 +72,10 @@ public class Molecule {
 		
 		identifyDihedrals(input);
 		
-		for (DihedralAngle d: dihedralList ){
-			System.out.println(d);
-		}
+		// For testing
+//		for (DihedralAngle d: dihedralList ){
+//			System.out.println(d);
+//		}
 		
 		System.out.println();
 		System.out.println("number of dihedral angles calculated = " + dihedralList.size());
@@ -78,10 +85,7 @@ public class Molecule {
 		System.out.println("atoms");
 		for (Atom a: atoms ){
 			System.out.println(a.id);
-		}
-
-
-		
+		}		
 	}
 	
 	/*
@@ -106,7 +110,7 @@ public class Molecule {
 				// check if distance is right for a C-C bond
 				// C-C bonds range from 1.20-1.54 Angstrom
 
-				if (atom1 instanceof Carbon && atom2 instanceof Carbon && distance <= (1.7 + 1.7 + 0.4)/2){
+				if ((atom1 instanceof Carbon && atom2 instanceof Carbon && distance <= (1.7 + 1.7)/2)){
 
 					bond = new Bond(atom1, atom2);
 					bondList.add(bond);
@@ -116,7 +120,7 @@ public class Molecule {
 				
 				// check if distance is right for a C-O bond
 				// C-O bonds range from 1.43-2.15 Angstrom
-				else if (atom1 instanceof Carbon  && atom2 instanceof Oxygen && distance <= (1.7 + 1.52 + 0.4)/2){
+				else if ((atom1 instanceof Carbon  && atom2 instanceof Oxygen && distance <= (1.7 + 1.52)/2) || (atom1 instanceof Oxygen && atom2 instanceof Carbon && distance <= (1.7 + 1.52)/2)){
 
 					bond = new Bond(atom1, atom2);
 					bondList.add(bond);
@@ -127,7 +131,7 @@ public class Molecule {
 				// check if distance is right for a C-H bond
 				// C-H bonds range from 1.06-1.12 Angstrom
 
-				else if (atom1 instanceof Carbon && atom2 instanceof Hydrogen && distance <= (1.7 + 1.09 + 0.4)/2){
+				else if ((atom1 instanceof Carbon && atom2 instanceof Hydrogen && distance <= (1.7 + 1.09)/2) || (atom1 instanceof Hydrogen && atom2 instanceof Carbon && distance <= (1.7 + 1.09)/2)){
 				
 					bond = new Bond(atom1, atom2);
 					bondList.add(bond);
@@ -138,7 +142,7 @@ public class Molecule {
 				// check if distance is right for a O-H bond
 				// O-H bond is approximately 0.96 Angstrom
 
-				else if (atom1 instanceof Oxygen  && atom2 instanceof Hydrogen && distance <= (1.52 + 1.09 + 0.4)/2){
+				else if ((atom1 instanceof Oxygen  && atom2 instanceof Hydrogen && distance <= (1.52 + 1.09)/2) || (atom1 instanceof Hydrogen && atom2 instanceof Oxygen && distance <= (1.52 + 1.09)/2)){
 
 					bond = new Bond(atom1, atom2);
 					bondList.add(bond);
@@ -156,11 +160,13 @@ public class Molecule {
 					bonded = false; //testing
 				}
 				
+				// For testing purposes
 //				System.out.println("x = " + atom1.getX() + " " + atom2.getX());
 //				System.out.println("y = " + atom1.getY() + " " + atom2.getY());
 //				System.out.println("y = " + atom1.getZ() + " " + atom2.getZ());
 //				System.out.println(atom1.atomAndNum + ", " + atom2.atomAndNum);
 //				System.out.println("ID = " + atom1.getID() + "  " + atom2.getID());
+//				System.out.println("type = " + atom1.getAtomType() + " " + atom2.getAtomType());
 //				System.out.println("distance " + distance);
 //				System.out.println(bonded);
 			}
@@ -227,7 +233,15 @@ public class Molecule {
 	
 	//For testing purposes
 	public ArrayList<DihedralAngle> getDihedralList(){
-		return dihedralList;
-		
+		return dihedralList;	
+	}
+	
+	//For testing purposes
+	public ArrayList<Angle> getAngleList(){
+		return angleList;
+	}
+	
+	public void updateMolecule(ArrayList<Atom> atoms){
+		Molecule updatedMolecule = new Molecule(atoms);
 	}
 }

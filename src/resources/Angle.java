@@ -53,4 +53,8 @@ public class Angle {
 	public String toString(){
 		return "Angle: " + angle + ", bond 1: " + b1.bondID + ", bond 2: " + b2.bondID; 
 	}
+	
+	public double getAngle(){
+		return angle;
+	}
 }

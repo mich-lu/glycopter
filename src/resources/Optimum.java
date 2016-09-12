@@ -1,7 +1,11 @@
 package resources;
 
+import java.util.ArrayList;
+
 public class Optimum {
 
+	//static ArrayList<DihedralAngle> newDihedrals = new ArrayList<DihedralAngle>();
+	
 	final double eConstant = 0; //dieelectric constant
 	
 	//returns the total potential energy of the molecule
@@ -24,9 +28,6 @@ public class Optimum {
 		// sum up all the energies of all the dihedrals
 		double dihedralEnergy=0;
 		double angleEnergy = 0;
-		//double k=0;
-		//double n=0;
-		//double phaseAngle=0;
 		
 		// Loop to calculate the energy of each individual dihedral angle in the molecule and add it to the total energy
 		for(DihedralAngle di: Molecule.dihedralList){
@@ -102,12 +103,20 @@ public class Optimum {
 	 *return the potential energy after this step of minimization 
 	 */
 	
-public static double steepestDescent(){
+	public static double steepestDescent(){
 		
 		System.out.println("Minimizing energy using Steepest Descent...");
 		
+		double stepsize = 27/50;
+		
 		//iterate through the dihedral angles to find the OH bonds
 		for( DihedralAngle di : Molecule.dihedralList){
+//			Atom a1 = di.a1;
+//			Atom a2 = di.a2;
+//			Atom a3 = di.a3;
+//			Atom a4 = di.a4;
+//			double diAngle = di.angle;
+			DihedralAngle minAngle = di;
 			
 			if (di.a3 instanceof Oxygen &&  di.a4 instanceof Hydrogen){
 		
@@ -129,10 +138,10 @@ public static double steepestDescent(){
 					//else rotate the angle
 					else{
 						
-						double angle2rotate = di.angle - derivative;
+						double angle2rotate = di.angle - stepsize*derivative;
 						
 						//find the normal between 3 points
-						double[] normal = Rotation.getNormal(di.a2.getXYZ(),di.a3.getXYZ(), di.a4.getXYZ());
+						double[] normal = Rotation.getNormal(di.a2.getXYZ(), di.a3.getXYZ(), di.a4.getXYZ());
 						
 						//get the current coordinates of the angle that you want to rotate
 						double [] oldXYZ = di.a4.getXYZ();
@@ -145,19 +154,18 @@ public static double steepestDescent(){
 						
 						//calculate updated dihedral angle
 						di.angle = DihedralAngle.calculateAngle(di.a1, di.a2, di.a3, di.a4);
-						
+						//minAngle = new DihedralAngle(di.a1, di.a2, di.a3, di.a4);
 					}
 				}
 				
 			}
+			
+//			newDihedrals.add(minAngle);
 		}
 		
-		
+		//updateMolecule(Molecule.atoms);
 		System.out.println("Molecule is minimized.");
 		return calculateTotalEnergy();
-		
-		
-		
 	}
 		
 	
@@ -173,5 +181,11 @@ public static double steepestDescent(){
 		return derivative;
 	}
 	
+//	public static ArrayList<DihedralAngle> getNewDihedrals(){
+//		return newDihedrals;
+//	}
 	
+	public void updateMolecule(ArrayList<Atom> atoms){
+		Molecule updatedMolecule = new Molecule(atoms);
+	}
 }

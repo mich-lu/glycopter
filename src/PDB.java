@@ -17,6 +17,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import resources.Angle;
 import resources.Atom;
 import resources.Carbon;
 import resources.Hydrogen;
@@ -33,46 +34,64 @@ public class PDB {
 	static String part1, atomAndNum, part4, part5, part9, part10, part11, atomType;//These are all the aspects in the PDB file that need to be the same in the output, and so need to be associated with each atom.
 	static int ID;
 	static double xPos, yPos, zPos;
+	static double initialEnergy, finalEnergy;
+	static ArrayList<Atom> newAtomList = new ArrayList<Atom>();
 	
 	public static void main(String[] args) throws IOException{
-		//filename = args[0];
-		readFromPDB(); //load the atoms and all the information associated with each atom
-		//inputFile = args[0];
-		//readFromPDB(inputFile); //load the atoms and all the information associated with each atom
+		filename = args[0];
+		//readFromPDB(); //load the atoms and all the information associated with each atom
+		inputFile = args[0];
+		readFromPDB(inputFile); //load the atoms and all the information associated with each atom
 		
 		Molecule mol = new Molecule(atomList); //create the molecule object
 		//calculate the energy of the molecule
 		System.out.println();
 		System.out.println("***************************************************************");
-		double initialEnergy = Optimum.calculateTotalEnergy();
+		initialEnergy = Optimum.calculateTotalEnergy();
 		System.out.println();
 		System.out.println("***************************************************************");
 		System.out.println("The current energy of the molecule is: " + initialEnergy);
 		System.out.println();
 		System.out.println("***************************************************************");
 		//minimize the energy of the molecule
-		double finalEnergy = Optimum.steepestDescent();
+		finalEnergy = Optimum.steepestDescent();
 		System.out.println("The initial energy of the molecule was: " + initialEnergy + "\n" + "The minimized energy of the molecule is: " + finalEnergy);
 		System.out.println();
 		System.out.println("***************************************************************");
+		System.out.println("new atoms = " + newAtomList.size());
+		
+		for (int i = 0; i < Molecule.angleList.size(); i++){
+			Angle a1 = Molecule.angleList.get(i);
+			Angle a2 = Molecule.originalAngleList.get(i);
+			//System.out.println("a1 = " + a1.getAngle() + ", a2 = " + a2.getAngle());
+			if (a1.getAngle() == a2.getAngle()){
+				//System.out.println("equal");
+				continue;
+			}
+			else{
+				System.out.println("not equal");
+				break;
+			}
+		}
+		System.out.println(Molecule.angleList.equals(Molecule.originalAngleList));
 		writeToPDB(atomList); //output the new molecule representation to PDB
 		
 	}
 	
-	public static void readFromPDB() throws IOException{
-		
-		Scanner scan = new Scanner(System.in);
+//	public static void readFromPDB() throws IOException{
+//		
+//		Scanner scan = new Scanner(System.in);
 	
-	//public static void readFromPDB(String inputFile) throws IOException{
-		//filename = inputFile;
+	public static void readFromPDB(String inputFile) throws IOException{
+		filename = inputFile;
 //		Scanner scan = new Scanner(System.in);
 //		
 
 //		//remember that this must be Console.WriteLine
-		System.out.println("Please enter the file name: ");
+		//System.out.println("Please enter the file name: ");
 		
 //		//get filename from user
-		filename = scan.nextLine();	
+		//filename = scan.nextLine();	
 		
 		//read in file
 		BufferedReader reader = new BufferedReader(new FileReader(filename));
@@ -203,4 +222,16 @@ public class PDB {
 			
 		}
 	}
+	
+	// For testing purposes
+	public double getInitialEnergy(){
+		return initialEnergy;
+	}
+	
+	//For testing purposes
+	public double getFinalEnergy(){
+		return finalEnergy;
+	}
+	
+	//For testing purposes
 }

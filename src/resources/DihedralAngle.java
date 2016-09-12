@@ -169,4 +169,7 @@ public class DihedralAngle{
 					
 	}
 		
+	public double getAngle(){
+		return angle;
+	}
 }
