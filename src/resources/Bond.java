@@ -32,6 +32,14 @@ public class Bond {
 		return bondID;
 	}
 	
+	public Atom getAtom1(){
+		return atom1;
+	}
+	
+	public Atom getAtom2(){
+		return atom2;
+	}
+	
 	public String toString(){
 		return "ID: " + bondID + " atom1: " + atom1.id + ", atom2: " + atom2.id; 
 	}

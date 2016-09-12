@@ -1,7 +1,5 @@
 package resources;
 
-import java.util.ArrayList;
-
 public class Optimum {
 
 	//static ArrayList<DihedralAngle> newDihedrals = new ArrayList<DihedralAngle>();
@@ -9,10 +7,10 @@ public class Optimum {
 	final double eConstant = 0; //dieelectric constant
 	
 	//returns the total potential energy of the molecule
-	public static double calculateTotalEnergy(){
+	public static double calculateTotalEnergy(Molecule mol){
 		
 		System.out.println("Calculating Total Energy...");
-		return (calculateDihedralEnergy() + calculateNonbondedEnergy());
+		return (calculateDihedralEnergy(mol) + calculateNonbondedEnergy(mol));
 	}
 	
 	
@@ -21,7 +19,7 @@ public class Optimum {
 	 * energies of each angle, and adding them to the total list
 	 */
 	
-	public static double calculateDihedralEnergy(){
+	public static double calculateDihedralEnergy(Molecule mol){
 			
 		System.out.println("Calculating Dihedral Energy...");
 		
@@ -30,7 +28,7 @@ public class Optimum {
 		double angleEnergy = 0;
 		
 		// Loop to calculate the energy of each individual dihedral angle in the molecule and add it to the total energy
-		for(DihedralAngle di: Molecule.dihedralList){
+		for(DihedralAngle di: mol.getDihedralList()){
 			//System.out.println("Di angle being calculated: "+di.a1+di.a2+di.a3+ di.a4);
 			angleEnergy = di.calculateAngleEnergy(di.a1, di.a2, di.a3, di.a4);
 			
@@ -46,7 +44,7 @@ public class Optimum {
 	
 	
 	//calculates the energy between non-bonded atoms
-	public static double calculateNonbondedEnergy(){
+	public static double calculateNonbondedEnergy(Molecule mol){
 		
 		System.out.println("Calculating Non-bonded Energy...");
 		
@@ -56,7 +54,7 @@ public class Optimum {
 		
 		double nEnergy = 0; //total non-bonded energy
 		
-		for(Interaction non: Molecule.interactionList){
+		for(Interaction non: mol.getInteractionList()){
 			// get appropriate constants
 			Double[] constants1 = getConstants(non.atom1);
 			Double[] constants2 = getConstants(non.atom2);
@@ -103,19 +101,15 @@ public class Optimum {
 	 *return the potential energy after this step of minimization 
 	 */
 	
-	public static double steepestDescent(){
+	public static double steepestDescent(Molecule mol){
 		
 		System.out.println("Minimizing energy using Steepest Descent...");
 		
 		double stepsize = 27/50;
 		
 		//iterate through the dihedral angles to find the OH bonds
-		for( DihedralAngle di : Molecule.dihedralList){
-//			Atom a1 = di.a1;
-//			Atom a2 = di.a2;
-//			Atom a3 = di.a3;
-//			Atom a4 = di.a4;
-//			double diAngle = di.angle;
+		for( DihedralAngle di : mol.getDihedralList()){
+
 			DihedralAngle minAngle = di;
 			
 			if (di.a3 instanceof Oxygen &&  di.a4 instanceof Hydrogen){
@@ -159,13 +153,10 @@ public class Optimum {
 				}
 				
 			}
-			
-//			newDihedrals.add(minAngle);
 		}
 		
-		//updateMolecule(Molecule.atoms);
 		System.out.println("Molecule is minimized.");
-		return calculateTotalEnergy();
+		return calculateTotalEnergy(mol);
 	}
 		
 	
@@ -180,12 +171,5 @@ public class Optimum {
 		
 		return derivative;
 	}
-	
-//	public static ArrayList<DihedralAngle> getNewDihedrals(){
-//		return newDihedrals;
-//	}
-	
-	public void updateMolecule(ArrayList<Atom> atoms){
-		Molecule updatedMolecule = new Molecule(atoms);
-	}
+
 }

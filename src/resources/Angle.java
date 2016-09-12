@@ -57,4 +57,8 @@ public class Angle {
 	public double getAngle(){
 		return angle;
 	}
+	
+	public Atom getSharedAtom(){
+		return shared;
+	}
 }

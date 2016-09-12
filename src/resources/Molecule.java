@@ -12,12 +12,12 @@ import java.util.ArrayList;
 
 public class Molecule {
 
-	static ArrayList<Atom> atoms;
+	ArrayList<Atom> atoms;
 	ArrayList<Bond> bondList;
-	static ArrayList<Interaction> interactionList; //non-bonded atoms
-	static ArrayList<DihedralAngle> dihedralList;
-	public static ArrayList<Angle> angleList; //used for checking purposes, all the angles between bonds
-	public static ArrayList<Angle> originalAngleList; //testing purposes
+	ArrayList<Interaction> interactionList; //non-bonded atoms
+	ArrayList<DihedralAngle> dihedralList;
+	ArrayList<Angle> angleList; //used for checking purposes, all the angles between bonds
+	ArrayList<Angle> originalAngleList; //testing purposes
 	
 	double distance; //distance between 2 atoms
 	Bond bond;
@@ -44,7 +44,7 @@ public class Molecule {
 		System.out.println("number of atoms in molecule = " + numAtoms);
 		System.out.println("Identifying the bonds...");
 		
-		identifyBonds(input);
+		identifyBonds(input, bondList);
 		
 		// For testing
 //		for (Bond b: bondList ){
@@ -56,7 +56,7 @@ public class Molecule {
 		System.out.println("*****************************************************");
 		
 		System.out.println("Identifying the angles between bonds...");
-		identifyAngles(bondList);
+		identifyAngles(bondList, angleList);
 		
 		// For testing
 //		for (Angle a: angleList ){
@@ -70,7 +70,7 @@ public class Molecule {
 		
 		System.out.println("Identifying the Dihedral Angles...");
 		
-		identifyDihedrals(input);
+		identifyDihedrals(input, dihedralList);
 		
 		// For testing
 //		for (DihedralAngle d: dihedralList ){
@@ -95,7 +95,7 @@ public class Molecule {
 	 * is between 0.4 Angstroms and (the sum of their covalent radii plus 0.56 Angstroms).
 	 * Source: https://www.umass.edu/microbio/rasmol/rasbonds.htm
 	 */
-	public void identifyBonds(ArrayList<Atom> atoms){
+	public void identifyBonds(ArrayList<Atom> atoms, ArrayList<Bond> b){
 		
 		for (int i = 0; i < (atoms.size() - 1); i++){
 			atom1 = atoms.get(i);
@@ -113,7 +113,7 @@ public class Molecule {
 				if ((atom1 instanceof Carbon && atom2 instanceof Carbon && distance <= (1.7 + 1.7)/2)){
 
 					bond = new Bond(atom1, atom2);
-					bondList.add(bond);
+					b.add(bond);
 					addToBondsList(atom1, atom2);
 					bonded = true; //testing
 				}
@@ -123,7 +123,7 @@ public class Molecule {
 				else if ((atom1 instanceof Carbon  && atom2 instanceof Oxygen && distance <= (1.7 + 1.52)/2) || (atom1 instanceof Oxygen && atom2 instanceof Carbon && distance <= (1.7 + 1.52)/2)){
 
 					bond = new Bond(atom1, atom2);
-					bondList.add(bond);
+					b.add(bond);
 					addToBondsList(atom1, atom2);
 					bonded = true; //testing
 				}
@@ -134,7 +134,7 @@ public class Molecule {
 				else if ((atom1 instanceof Carbon && atom2 instanceof Hydrogen && distance <= (1.7 + 1.09)/2) || (atom1 instanceof Hydrogen && atom2 instanceof Carbon && distance <= (1.7 + 1.09)/2)){
 				
 					bond = new Bond(atom1, atom2);
-					bondList.add(bond);
+					b.add(bond);
 					addToBondsList(atom1, atom2);
 					bonded = true; //testing
 				}
@@ -145,7 +145,7 @@ public class Molecule {
 				else if ((atom1 instanceof Oxygen  && atom2 instanceof Hydrogen && distance <= (1.52 + 1.09)/2) || (atom1 instanceof Hydrogen && atom2 instanceof Oxygen && distance <= (1.52 + 1.09)/2)){
 
 					bond = new Bond(atom1, atom2);
-					bondList.add(bond);
+					b.add(bond);
 					addToBondsList(atom1, atom2);
 					bonded = true; //testing
 				}
@@ -173,7 +173,7 @@ public class Molecule {
 		}
 	}
 
-	public void identifyDihedrals(ArrayList<Atom> atomList){
+	public void identifyDihedrals(ArrayList<Atom> atomList, ArrayList<DihedralAngle> di){
 		DihedralAngle dihedral;
 		// Determine 4 atoms in dihedral
 		for (Bond bond : bondList){ // iterate through middle bond, therefore between a2 and a3
@@ -186,14 +186,14 @@ public class Molecule {
 					for(Atom last : a3.getBonds()){
 						if (last == a2){continue;} // check atom is in current bond
 						dihedral = new DihedralAngle(first, a2, a3, last);
-						dihedralList.add(dihedral);
+						di.add(dihedral);
 					}
 				}
 			}
 		}
 	}
 	
-	public void identifyAngles(ArrayList<Bond> bondList){
+	public void identifyAngles(ArrayList<Bond> bondList, ArrayList<Angle> a){
 		Angle bondPair;
 		Bond b1, b2;
 		for (int i = 0; i < (bondList.size() - 1); i++){
@@ -205,12 +205,12 @@ public class Molecule {
 				
 				if (b1.atom1 == b2.atom1 || b1.atom1 == b2.atom2){
 					bondPair = new Angle(b1, b2, b1.atom1);
-					angleList.add(bondPair);
+					a.add(bondPair);
 					continue;
 				}
 				if (b1.atom2 == b2.atom1 || b1.atom2 == b2.atom2){
 					bondPair = new Angle(b1, b2, b1.atom2);
-					angleList.add(bondPair);
+					a.add(bondPair);
 					continue;
 				}
 			}
@@ -226,22 +226,23 @@ public class Molecule {
 		}
 	}
 	
-	//For testing purposes
 	public ArrayList<Bond> getBondList(){
 		return bondList;
 	}
 	
-	//For testing purposes
 	public ArrayList<DihedralAngle> getDihedralList(){
 		return dihedralList;	
 	}
 	
-	//For testing purposes
 	public ArrayList<Angle> getAngleList(){
 		return angleList;
 	}
 	
-	public void updateMolecule(ArrayList<Atom> atoms){
-		Molecule updatedMolecule = new Molecule(atoms);
+	public ArrayList<Interaction> getInteractionList(){
+		return interactionList;
+	}
+	
+	public ArrayList<Atom> getAtomList(){
+		return atoms;
 	}
 }

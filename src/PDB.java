@@ -47,33 +47,18 @@ public class PDB {
 		//calculate the energy of the molecule
 		System.out.println();
 		System.out.println("***************************************************************");
-		initialEnergy = Optimum.calculateTotalEnergy();
+		initialEnergy = Optimum.calculateTotalEnergy(mol);
 		System.out.println();
 		System.out.println("***************************************************************");
 		System.out.println("The current energy of the molecule is: " + initialEnergy);
 		System.out.println();
 		System.out.println("***************************************************************");
 		//minimize the energy of the molecule
-		finalEnergy = Optimum.steepestDescent();
+		finalEnergy = Optimum.steepestDescent(mol);
 		System.out.println("The initial energy of the molecule was: " + initialEnergy + "\n" + "The minimized energy of the molecule is: " + finalEnergy);
 		System.out.println();
 		System.out.println("***************************************************************");
 		System.out.println("new atoms = " + newAtomList.size());
-		
-		for (int i = 0; i < Molecule.angleList.size(); i++){
-			Angle a1 = Molecule.angleList.get(i);
-			Angle a2 = Molecule.originalAngleList.get(i);
-			//System.out.println("a1 = " + a1.getAngle() + ", a2 = " + a2.getAngle());
-			if (a1.getAngle() == a2.getAngle()){
-				//System.out.println("equal");
-				continue;
-			}
-			else{
-				System.out.println("not equal");
-				break;
-			}
-		}
-		System.out.println(Molecule.angleList.equals(Molecule.originalAngleList));
 		writeToPDB(atomList); //output the new molecule representation to PDB
 		
 	}

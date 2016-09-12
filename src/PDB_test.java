@@ -1,4 +1,5 @@
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,43 +42,56 @@ public class PDB_test {
 	@BeforeClass
 	// load the pdb file and run the plugin
     public static void SetUp() throws IOException {
-        tester.readFromPDB(pdb1);
+		
+        tester.readFromPDB(pdb4);
         atoms = tester.atomList;
         molTest = new Molecule (atoms);
-        bonds = molTest.getBondList();
+        bonds = molTest.getBondList();      
         angles = molTest.getAngleList();
-        dihedrals = molTest.getDihedralList();
-        initialEnergy = Optimum.calculateTotalEnergy();
-        finalEnergy = Optimum.steepestDescent();
-        atomsNew = tester.atomList;
-//        bondsNew = molTest.getBondList();
-//        anglesNew = molTest.getAngleList();
+        
+        //add original atoms to a new list
+        molTest.identifyDihedrals(atoms, dihedrals);
+        
+        initialEnergy = Optimum.calculateTotalEnergy(molTest);
+        finalEnergy = Optimum.steepestDescent(molTest);
+        
+        //get updated the molecule for testing purposes
+        
+        atomsNew = molTest.getAtomList();
+        //recalculate bonds and add them to new list
+        molTest.identifyBonds(atomsNew, bondsNew);
+        
+        //recalculate angles from the new bonds and add to new list
+        molTest.identifyAngles(bondsNew, anglesNew);
+        
         dihedralsNew = molTest.getDihedralList();
+        
+        
     }
 	
 	
 	@Test
 	// Test that the plugin loads in the correct number of atoms.
 	public void testNumAtoms() throws Exception {
-		assertEquals("The program should load 27 atoms", 27, atoms.size());
+		assertEquals("The program should load 41 atoms", 41, atoms.size());
 	}
 	
 	@Test
 	//Test that the plugin loads creates the correct number of bond objects
 	public void testNumBonds() throws Exception {
-		assertEquals("The program should load 27 bonds", 27, bonds.size());
+		assertEquals("The program should load 42 bonds", 42, bondsNew.size());
 	}
 	
 	@Test
 	// Test that the plugin creates the correct number of angles
 	public void testNumAngles() throws Exception {
-		assertEquals("The program should load 48 angles", 48, angles.size());
+		assertEquals("The program should load 76 angles", 76, angles.size());
 	}
 	
 	@Test
 	// Test that the plugin creates the correct number of dihedral angles
 	public void testNumDihedrals() throws Exception {
-		assertEquals("The program should load 69 dihedrals", 69, dihedrals.size());
+		assertEquals("The program should load 120 dihedrals", 120, dihedrals.size());
 	}
 
 	@Test
@@ -86,19 +100,20 @@ public class PDB_test {
 		assertTrue("Initial energy (" + initialEnergy + ") should be greater than the final minimized energy (" + finalEnergy + ").", initialEnergy > finalEnergy);
 	}
 	
-//	@Test
+	@Test
 //	// Test that the list of dihedrals has changed
-//	public void testDihedralsChanged() throws Exception {
-//		boolean same = true;
-//		for (int i = 0; i < dihedrals.size(); i++){
-//			if (!(dihedrals.get(i).getAngle() == dihedralsNew.get(i).getAngle())){
-//				same = false;
-//				break;
-//			}
-//		}
-//		
-//		assertTrue(same == false);
-//	}
+	public void testDihedralsChanged() throws Exception {
+		boolean same = true;
+		for (int i = 0; i < dihedrals.size(); i++){
+			if (!(dihedrals.get(i).getAngle() == dihedralsNew.get(i).getAngle())){
+				System.out.print("The dihedrals are different.");
+				same = false;
+				break;
+			}
+		}
+		
+		assertTrue(same == false);
+	}
 	
 	@Test
 //	// Check that the number of atoms has not changed in the minimized molecule
@@ -115,7 +130,8 @@ public class PDB_test {
 	public void testAtomPosChanged() throws Exception {
 		boolean same = true;
 		for (int i = 0; i < atoms.size(); i++){
-			if (!(atoms.get(i).getX() == atomsNew.get(i).getX())){
+			if (!(atoms.get(i).getXYZ().equals(atomsNew.get(i).getXYZ()))){
+				System.out.println("The positions of the atoms have changed.");
 				same = false;
 				break;
 			}
@@ -123,15 +139,41 @@ public class PDB_test {
 		assertTrue(same == false);
 	}
 	
-	//@Test
+	@Test
 	// Test that the bonds haven't been changed during minimization
-//	public void testBondsSame() throws Exception {
-//		
-//	}
+	public void testBondsSame() throws Exception {
+		
+		boolean same = true;
+		
+		for (int i =0; i < bonds.size(); i++){
+			
+			//check if the bond exists between the same atoms
+			if( !(bonds.get(i).getAtom1().getID() == bondsNew.get(i).getAtom1().getID()) && !(bonds.get(i).getAtom2().getID() == bondsNew.get(i).getAtom2().getID())){
+				System.out.println("Old : " +bonds.get(i).toString() + "\nNew: " + bondsNew.get(i).toString());
+				same = false;
+				break;
+			}
+		}
+		assertTrue(same == true);
+		
+	}
 //	
-//	@Test
-//	// Check that the bond angles haven't changed during minimization
-//	public void testAnglesSame() throws Exception {
-//		
-//	}
+	@Test
+	// Check that the bond angles haven't changed during minimization
+	public void testAnglesSame() throws Exception {
+		
+		boolean same = true;
+		
+		for (int i =0; i < angles.size(); i++){
+			
+			//check if the angles between 2 bonds are not the same, as well as the shared atom
+			if( !(angles.get(i).getAngle() == anglesNew.get(i).getAngle()) && !(angles.get(i).getSharedAtom().equals(anglesNew.get(i).getSharedAtom()))){
+				System.out.println("Old : " +angles.get(i).toString() + "\nNew: " + anglesNew.get(i).toString());
+				same = false;
+				break;
+			}
+		}
+		assertTrue(same == true);
+		
+	}
 }
