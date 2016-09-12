@@ -12,11 +12,12 @@ import java.util.ArrayList;
 
 public class Molecule {
 
-	ArrayList<Atom> atoms;
+	static ArrayList<Atom> atoms;
 	ArrayList<Bond> bondList;
 	static ArrayList<Interaction> interactionList; //non-bonded atoms
 	static ArrayList<DihedralAngle> dihedralList;
-	static ArrayList<Angle> angleList; //used for checking purposes, all the angles between bonds
+	public static ArrayList<Angle> angleList; //used for checking purposes, all the angles between bonds
+	public static ArrayList<Angle> originalAngleList; //testing purposes
 	
 	double distance; //distance between 2 atoms
 	Bond bond;
@@ -33,6 +34,7 @@ public class Molecule {
 		dihedralList = new ArrayList<DihedralAngle>();
 		interactionList = new ArrayList<Interaction>();
 		angleList = new ArrayList<Angle>();
+		originalAngleList = angleList;
 		atoms = input;
 		bond = null;
 		atom1 = null;
@@ -237,5 +239,9 @@ public class Molecule {
 	//For testing purposes
 	public ArrayList<Angle> getAngleList(){
 		return angleList;
+	}
+	
+	public void updateMolecule(ArrayList<Atom> atoms){
+		Molecule updatedMolecule = new Molecule(atoms);
 	}
 }
