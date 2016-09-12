@@ -49,7 +49,7 @@ public class PDB_test {
         dihedrals = molTest.getDihedralList();
         initialEnergy = Optimum.calculateTotalEnergy();
         finalEnergy = Optimum.steepestDescent();
-        atomsNew = tester.newAtomList;
+        atomsNew = tester.atomList;
 //        bondsNew = molTest.getBondList();
 //        anglesNew = molTest.getAngleList();
         dihedralsNew = Optimum.getNewDihedrals();
@@ -91,50 +91,47 @@ public class PDB_test {
 	public void testDihedralsChanged() throws Exception {
 		boolean same = true;
 		for (int i = 0; i < dihedrals.size(); i++){
-			for (int j = 0; j < dihedralsNew.size(); j++){
-				if (!(dihedrals.get(i).equals(dihedralsNew.get(i)))){
-					same = false;
-					break;
-				}
-				else
-					continue;
-			}
-			if (same == false)
+			if (!(dihedrals.get(i).equals(dihedralsNew.get(i)))){
+				same = false;
 				break;
-			else
-				continue;
+			}
 		}
 		
 		assertTrue(same == false);
 	}
 	
-//	@Test
+	@Test
 //	// Check that the number of atoms has not changed in the minimized molecule
-//	public void testNumberAtomsSame() throws Exception {
-//		System.out.println("atoms = " +atoms.size());
-//		System.out.println("atomsnew = " + atomsNew.size());
-//		
-//		assertTrue(atoms.size() == atomsNew.size());
-//		
-//	}
+	public void testNumberAtomsSame() throws Exception {
+		System.out.println("atoms = " +atoms.size());
+		System.out.println("atomsnew = " + atomsNew.size());
+		
+		assertTrue(atoms.size() == atomsNew.size());
+		
+	}
 	
-//	@Test
+	@Test
 	// Test that the positions of atoms in the minimized molecule have changed
-//	public void testAtomPosChanged() throws Exception {
-//		for (int i = 0; i < atoms.size(); i++){
-//			
-//		}
-//	}
+	public void testAtomPosChanged() throws Exception {
+		boolean same = true;
+		for (int i = 0; i < atoms.size(); i++){
+			if (!(atoms.get(i).getXYZ().equals(atomsNew.get(i).getXYZ()))){
+				same = false;
+				break;
+			}
+		}
+		assertTrue(same == false);
+	}
 	
-	@Test
+	//@Test
 	// Test that the bonds haven't been changed during minimization
-	public void testBondsSame() throws Exception {
-		
-	}
-	
-	@Test
-	// Check that the bond angles haven't changed during minimization
-	public void testAnglesSame() throws Exception {
-		
-	}
+//	public void testBondsSame() throws Exception {
+//		
+//	}
+//	
+//	@Test
+//	// Check that the bond angles haven't changed during minimization
+//	public void testAnglesSame() throws Exception {
+//		
+//	}
 }
