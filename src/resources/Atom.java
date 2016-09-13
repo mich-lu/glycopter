@@ -117,6 +117,6 @@ public abstract class Atom {
 		return bondedToList;
 	}
 	public String toString(){
-		return "Atom ID: " + id;
+		return "Atom ID: " + id + " Atom Type:  " + atomType+ " x: " + getX() + " y: "+ getY() + " z: " + getZ() ;
 	}
 }

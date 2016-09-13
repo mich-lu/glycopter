@@ -105,13 +105,11 @@ public class Optimum {
 		
 		System.out.println("Minimizing energy using Steepest Descent...");
 		
-		double stepsize = 27/50;
+		double stepsize = 27/50; 
 		
 		//iterate through the dihedral angles to find the OH bonds
 		for( DihedralAngle di : mol.getDihedralList()){
 
-			DihedralAngle minAngle = di;
-			
 			if (di.a3 instanceof Oxygen &&  di.a4 instanceof Hydrogen){
 		
 				//System.out.println(di.a3.atomType + " " + di.a4.atomType);
@@ -139,12 +137,14 @@ public class Optimum {
 						
 						//get the current coordinates of the angle that you want to rotate
 						double [] oldXYZ = di.a4.getXYZ();
+						//System.out.println("Old: "+ di.a4.getX() + " " + di.a4.getY() + " " + di.a4.getZ());
 						
 						//find the new coordinates about the stationary angle
 						double[] newXYZ = Rotation.getNewPointFromNormal(di.a3.getXYZ(), normal, angle2rotate, oldXYZ);
 						
 						//set the new coordinates
 						di.a4.setXYZ(newXYZ);
+						//System.out.println("New: " +di.a4.getX() + " " + di.a4.getY() + " " + di.a4.getZ());
 						
 						//calculate updated dihedral angle
 						di.angle = DihedralAngle.calculateAngle(di.a1, di.a2, di.a3, di.a4);

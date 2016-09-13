@@ -172,4 +172,8 @@ public class DihedralAngle{
 	public double getAngle(){
 		return angle;
 	}
+	
+	public Atom getAtom4(){
+		return a4;
+	}
 }
