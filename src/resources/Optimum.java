@@ -132,15 +132,18 @@ public class Optimum {
 						
 						double angle2rotate = di.angle - stepsize*derivative;
 						
-						//find the normal between 3 points
-						double[] normal = Rotation.getNormal(di.a2.getXYZ(), di.a3.getXYZ(), di.a4.getXYZ());
+//						//find the normal between 3 points
+//						double[] normal = Rotation.getNormal(di.a2.getXYZ(), di.a3.getXYZ(), di.a4.getXYZ());
+//						
+//						//get the current coordinates of the angle that you want to rotate
+//						double [] oldXYZ = di.a4.getXYZ();
+//						//System.out.println("Old: "+ di.a4.getX() + " " + di.a4.getY() + " " + di.a4.getZ());
+//						
+//						//find the new coordinates about the stationary angle
+//						double[] newXYZ = Rotation.getNewPointFromNormal(di.a3.getXYZ(), normal, angle2rotate, oldXYZ);
+//						
 						
-						//get the current coordinates of the angle that you want to rotate
-						double [] oldXYZ = di.a4.getXYZ();
-						//System.out.println("Old: "+ di.a4.getX() + " " + di.a4.getY() + " " + di.a4.getZ());
-						
-						//find the new coordinates about the stationary angle
-						double[] newXYZ = Rotation.getNewPointFromNormal(di.a3.getXYZ(), normal, angle2rotate, oldXYZ);
+						double[] newXYZ = rotateAtom(di.a2, di.a3, di.a4, angle2rotate);
 						
 						//set the new coordinates
 						di.a4.setXYZ(newXYZ);
@@ -151,7 +154,7 @@ public class Optimum {
 						//minAngle = new DihedralAngle(di.a1, di.a2, di.a3, di.a4);
 					}
 				}
-				
+				break;
 			}
 		}
 		
@@ -170,6 +173,43 @@ public class Optimum {
 		double derivative = -(n*k)*(Math.sin(n*di.angle + phase));
 		
 		return derivative;
+	}
+	
+	public static double[] rotateAtom (Atom C, Atom O, Atom H, double theta){
+		
+		double[] axis = {O.getX() - C.getX(), O.getY() - C.getY(), O.getZ() - C.getZ()};
+		double axisMag = Math.sqrt(Math.pow(axis[0], 2) + Math.pow(axis[1], 2) + Math.pow(axis[2], 2));
+		for (int i = 0; i < axis.length; i++){
+			axis[i] = axis[i]/axisMag;
+		}
+		
+		double[] vector = {H.getX() - O.getX(), H.getY() - O.getY(), H.getZ() - O.getZ()};	
+		
+		double[] newPoint = new double[3];
+		double x, y, z;
+	    double u, v, w;
+	    x=vector[0];
+	    y=vector[1];
+	    z=vector[2];
+	    u=axis[0];
+	    v=axis[1];
+	    w=axis[2];
+	    double xPrime = u*(u*x + v*y + w*z)*(1d - Math.cos(theta)) 
+	            + x*Math.cos(theta)
+	            + (-w*y + v*z)*Math.sin(theta);
+	    double yPrime = v*(u*x + v*y + w*z)*(1d - Math.cos(theta))
+	            + y*Math.cos(theta)
+	            + (w*x - u*z)*Math.sin(theta);
+	    double zPrime = w*(u*x + v*y + w*z)*(1d - Math.cos(theta))
+	            + z*Math.cos(theta)
+	            + (-v*x + u*y)*Math.sin(theta);
+	    
+	    newPoint[0] = xPrime + O.getX();
+	    newPoint[1] = yPrime + O.getY();
+	    newPoint[2] = zPrime + O.getZ();
+	    //Double[] newVec = {xPrime, yPrime, zPrime};
+	    
+	    return newPoint;
 	}
 
 }
