@@ -4,7 +4,6 @@ public class Angle {
 	double angle;
 	Bond b1, b2;
 	Atom shared;
-	public static Double dihedralAngleE;
 	Atom[] uniqueList;
 
 	public Angle(Bond bond1, Bond bond2, Atom atom){
@@ -51,14 +50,6 @@ public class Angle {
 	}
 	
 	public String toString(){
-		return "Angle: " + angle + " Shared Atom: "+ shared; 
-	}
-	
-	public double getAngle(){
-		return angle;
-	}
-	
-	public Atom getSharedAtom(){
-		return shared;
+		return "Angle: " + angle + ", bond 1: " + b1.bondID + ", bond 2: " + b2.bondID; 
 	}
 }

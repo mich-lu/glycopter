@@ -143,7 +143,7 @@ public class Optimum {
 //						double[] newXYZ = Rotation.getNewPointFromNormal(di.a3.getXYZ(), normal, angle2rotate, oldXYZ);
 //						
 						
-						double[] newXYZ = rotateAtom(di.a2, di.a3, di.a4, angle2rotate);
+						double[] newXYZ = rotate(di.a2, di.a3, di.a4, angle2rotate);
 						
 						//set the new coordinates
 						di.a4.setXYZ(newXYZ);
@@ -211,5 +211,64 @@ public class Optimum {
 	    
 	    return newPoint;
 	}
+	public static double[] rotate(Atom C, Atom O, Atom H, double theta){
+		
+		double[] axis = {O.getX() - C.getX(), O.getY() - C.getY(), O.getZ() - C.getZ()};
+		// normalise axis:
+		double axisMag = Math.sqrt(Math.pow(axis[0], 2) + Math.pow(axis[1], 2) + Math.pow(axis[2], 2));
+		for (int i = 0; i < axis.length; i++){
+			axis[i] = axis[i]/axisMag;
+		}
+		
+		double[] vector = {H.getX() - O.getX(), H.getY() - O.getY(), H.getZ() - O.getZ()};	
+		
+		// decompose vector into 2 components:
+		// component in direction of axis
+		double[] parallel = new double[3];
+		double factor = (dotProduct(vector, axis)/dotProduct(axis, axis));
+		for(int i=0 ; i<3 ; i++){
+			parallel[i] = factor*axis[i];
+		}
+		// component orthogonal to axis
+		double[] perpendicular = new double[3];
+		for(int i=0 ; i<3 ; i++){
+			perpendicular[i] = vector[i] - perpendicular[i];
+		}
+		
+		// now define a vector orthogonal to perpendicular and the axis, w:
+		double[] W = crossProduct(axis, perpendicular);
+		// now calculate rotation of perpendicular theta radians:
+		double magPerpendicular = Math.sqrt(Math.pow(perpendicular[0], 2) + Math.pow(perpendicular[1], 2) + Math.pow(perpendicular[2], 2));
+		double magW = Math.sqrt(Math.pow(W[0], 2) + Math.pow(W[1], 2) + Math.pow(W[2], 2));
+		double x1 = Math.cos(theta)/magPerpendicular;
+		double x2 = Math.sin(theta)/magW;
+		
+		double[] rotPerpendicular = new double[3];
+		for(int i=0 ; i<3 ; i++){
+			rotPerpendicular[i] = magPerpendicular*(x1*perpendicular[i] + x2*W[i]);
+		}
+		// finally, the new rotated vector:
+		double[] rotatedVector = new double[3];
+		for(int i=0 ; i<3 ; i++){
+			rotatedVector[i] = rotPerpendicular[i] + parallel[i];
+		}
+		
+		return rotatedVector;
+	}
 
+	public static double[] crossProduct(double[] A, double[] B){
+		double uvi, uvj, uvk;
+        uvi = A[1] * B[2] - B[1] * A[2];
+        uvj = B[0] * A[2] - A[0] * B[2];
+        uvk = A[0] * B[1] - B[0] * A[1];
+        double[] crossProduct = {uvi, uvj, uvk};
+        return crossProduct;
+	}
+	public static double dotProduct(double[] A, double[] B){
+		 double sum = 0;
+		    for (int i = 0; i < A.length; i++) {
+		      sum += A[i] * B[i];
+		    }
+		    return sum;
+	}
 }
