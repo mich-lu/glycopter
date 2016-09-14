@@ -154,7 +154,7 @@ public class Optimum {
 						//minAngle = new DihedralAngle(di.a1, di.a2, di.a3, di.a4);
 					}
 				}
-				break;
+				//break;
 			}
 		}
 		

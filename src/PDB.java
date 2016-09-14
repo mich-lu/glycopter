@@ -47,6 +47,7 @@ public class PDB {
 		//calculate the energy of the molecule
 		System.out.println();
 		System.out.println("***************************************************************");
+		long startTime = System.currentTimeMillis();
 		initialEnergy = Optimum.calculateTotalEnergy(mol);
 		System.out.println();
 		System.out.println("***************************************************************");
@@ -55,12 +56,14 @@ public class PDB {
 		System.out.println("***************************************************************");
 		//minimize the energy of the molecule
 		finalEnergy = Optimum.steepestDescent(mol);
+		long endTime = System.currentTimeMillis();
 		System.out.println("The initial energy of the molecule was: " + initialEnergy + "\n" + "The minimized energy of the molecule is: " + finalEnergy);
 		System.out.println();
 		System.out.println("***************************************************************");
 		System.out.println("new atoms = " + newAtomList.size());
 		writeToPDB(atomList); //output the new molecule representation to PDB
-		
+		long runTime = endTime - startTime;
+		System.out.println("The calculations took: " + runTime + " ms");
 	}
 	
 //	public static void readFromPDB() throws IOException{
