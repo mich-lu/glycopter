@@ -219,7 +219,6 @@ public class Optimum {
 		for (int i = 0; i < axis.length; i++){
 			axis[i] = axis[i]/axisMag;
 		}
-		
 		double[] vector = {H.getX() - O.getX(), H.getY() - O.getY(), H.getZ() - O.getZ()};	
 		
 		// decompose vector into 2 components:
