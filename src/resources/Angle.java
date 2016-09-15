@@ -1,5 +1,8 @@
 package resources;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
 public class Angle {
 	double angle;
 	Bond b1, b2;
@@ -50,6 +53,9 @@ public class Angle {
 	}
 	
 	public String toString(){
-		return "Angle: " + angle + ", bond 1: " + b1.bondID + ", bond 2: " + b2.bondID; 
+		DecimalFormat df = new DecimalFormat("#.#####");
+		df.setRoundingMode(RoundingMode.CEILING);
+		
+		return "Angle: " + df.format(angle); 
 	}
 }

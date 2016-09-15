@@ -46,22 +46,12 @@ public class Molecule {
 		
 		identifyBonds(input, bondList);
 		
-		// For testing
-//		for (Bond b: bondList ){
-//			System.out.println(b);
-//		}
-		
 		System.out.println();
 		System.out.println("number of bonds calculated = " + bondList.size());
 		System.out.println("*****************************************************");
 		
 		System.out.println("Identifying the angles between bonds...");
 		identifyAngles(bondList, angleList);
-		
-		// For testing
-//		for (Angle a: angleList ){
-//			System.out.println(a);
-//		}
 		
 		System.out.println();
 		System.out.println("number of angles calculated = " + angleList.size());
@@ -72,20 +62,9 @@ public class Molecule {
 		
 		identifyDihedrals(input, dihedralList);
 		
-		// For testing
-//		for (DihedralAngle d: dihedralList ){
-//			System.out.println(d);
-//		}
-		
 		System.out.println();
 		System.out.println("number of dihedral angles calculated = " + dihedralList.size());
 		
-	}
-		/*
-		System.out.println("atoms");
-		for (Atom a: atoms ){
-			System.out.println(a.id);
-		}		
 	}
 	
 	/*
@@ -160,15 +139,6 @@ public class Molecule {
 					bonded = false; //testing
 				}
 				
-				// For testing purposes
-//				System.out.println("x = " + atom1.getX() + " " + atom2.getX());
-//				System.out.println("y = " + atom1.getY() + " " + atom2.getY());
-//				System.out.println("y = " + atom1.getZ() + " " + atom2.getZ());
-//				System.out.println(atom1.atomAndNum + ", " + atom2.atomAndNum);
-//				System.out.println("ID = " + atom1.getID() + "  " + atom2.getID());
-//				System.out.println("type = " + atom1.getAtomType() + " " + atom2.getAtomType());
-//				System.out.println("distance " + distance);
-//				System.out.println(bonded);
 			}
 		}
 	}
