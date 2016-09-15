@@ -61,8 +61,8 @@ public class PDB {
 		System.out.println();
 		System.out.println("***************************************************************");
 		System.out.println("new atoms = " + newAtomList.size());
-		writeToPDB(atomList); //output the new molecule representation to PDB
 		long runTime = endTime - startTime;
+		writeToPDB(atomList); //output the new molecule representation to PDB
 		System.out.println("The calculations took: " + runTime + " ms");
 	}
 	
