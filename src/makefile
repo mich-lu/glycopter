@@ -10,22 +10,26 @@ JC = javac
 	
 CLASSES = \
 	PDB.java \
-	Atom.java \
-	Bond.java \
-	Carbon.java \
-	DihedralAngle.java \
-	Hydrogen.java \
-	Interaction.java \
-	Molecule.java \
-	Optimum.java \
-	Oxygen.java
+	resources\Atom.java \
+	resources\Bond.java \
+	resources\Carbon.java \
+	resources\DihedralAngle.java \
+	resources\Hydrogen.java \
+	resources\Interaction.java \
+	resources\Molecule.java \
+	resources\Optimum.java \
+	resources\Oxygen.java \
+	resources\Angle.java \
+	resources\Rotation.java \
 
-Default: classes
+MAIN: PDB
+
+default: classes
 
 classes: $(CLASSES:.java=.class)
 
 run:
-	java PDB final.pdb
+	java PDB ${args}
 	
 clean:
 	$(RM) *.class
