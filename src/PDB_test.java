@@ -47,7 +47,7 @@ public class PDB_test {
 	// load the pdb file and run the plugin
     public static void SetUp() throws IOException {
 		
-        tester.readFromPDB(pdb1);
+        tester.readFromPDB(pdb3);
         atoms = tester.atomList;
         
         //add old atoms to a list of strings
@@ -104,25 +104,25 @@ public class PDB_test {
 	@Test
 	// Test that the plugin loads in the correct number of atoms.
 	public void testNumAtoms() throws Exception {
-		assertEquals("The program should load 27 atoms", 27, atoms.size());
+		assertEquals("The program should load 45 atoms", 45, atoms.size());
 	}
 	
 	@Test
 	//Test that the plugin loads creates the correct number of bond objects
 	public void testNumBonds() throws Exception {
-		assertEquals("The program should load 27 bonds", 27, bondsNew.size());
+		assertEquals("The program should load 46 bonds", 46, bondsNew.size());
 	}
 	
 	@Test
 	// Test that the plugin creates the correct number of angles
 	public void testNumAngles() throws Exception {
-		assertEquals("The program should load 48 angles", 48, anglesNew.size());
+		assertEquals("The program should load 83 angles", 83, anglesNew.size());
 	}
 	
 	@Test
 	// Test that the plugin creates the correct number of dihedral angles
 	public void testNumDihedrals() throws Exception {
-		assertEquals("The program should load 69 dihedrals", 69, dihedralsNew.size());
+		assertEquals("The program should load 132 dihedrals", 132, dihedralsNew.size());
 	}
 
 	@Test
@@ -205,7 +205,7 @@ public class PDB_test {
 				System.out.println("Angles hve changed");
 				System.out.println("Old : " +angleString.get(i) + "\nNew: " + anglesNew.get(i).toString());
 				same = false;
-				//break;
+				break;
 			}
 		}
 		assertTrue(same == true);

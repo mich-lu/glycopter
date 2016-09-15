@@ -219,24 +219,6 @@ public class Rotation {
         return 180 / Math.PI * radian;
     }
 
-	// MK removed for now - breaks algorithm!!!!!
-    /// <summary>
-    /// Give more options for angles so that when after all testing with angles provided, 
-    /// by incrementing 20 each step,
-    /// This gives more torsion angle pairs to see if collide
-    /// </summary>
-    /// <param name="counter">int, the counter for increment</param>
-    /// <returns>double[], phi, psi, and omega angle in degree</returns>
-    public static double[] getAppendAngles(int counter)
-    {
-        double[] append = new double[3];
-        append[0] = counter % 18 * 20 + 1;
-        append[1] = 1; 
-        append[2] = counter % 18 * 20 + 1;
-
-        return append;
-    }
-
 }
 
 
