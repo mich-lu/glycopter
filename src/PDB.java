@@ -7,6 +7,7 @@
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.Console;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -15,7 +16,6 @@ import java.io.IOException;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import resources.Angle;
 import resources.Atom;
@@ -39,6 +39,7 @@ public class PDB {
 	
 	public static void main(String[] args) throws IOException{
 		filename = args[0];
+		fileOutName = args[1];
 		//readFromPDB(); //load the atoms and all the information associated with each atom
 		inputFile = args[0];
 		readFromPDB(inputFile); //load the atoms and all the information associated with each atom
@@ -64,6 +65,7 @@ public class PDB {
 		long runTime = endTime - startTime;
 		writeToPDB(atomList); //output the new molecule representation to PDB
 		System.out.println("The calculations took: " + runTime + " ms");
+	
 	}
 	
 //	public static void readFromPDB() throws IOException{
@@ -72,14 +74,6 @@ public class PDB {
 	
 	public static void readFromPDB(String inputFile) throws IOException{
 		filename = inputFile;
-//		Scanner scan = new Scanner(System.in);
-//		
-
-//		//remember that this must be Console.WriteLine
-		//System.out.println("Please enter the file name: ");
-		
-//		//get filename from user
-		//filename = scan.nextLine();	
 		
 		//read in file
 		BufferedReader reader = new BufferedReader(new FileReader(filename));
@@ -155,15 +149,6 @@ public class PDB {
 		StringBuilder sb = new StringBuilder();
 		
 		Atom currentAtom;
-		
-		Scanner in = new Scanner(System.in);
-		
-		//remember that this must be Console.WriteLine
-		System.out.println("Please enter the filename you would like to write to: ");
-		
-		//Get the name of the PDB file that the user wants to output the molecule to
-		fileOutName = in.nextLine();
-		
 		try {
 			File file = new File(fileOutName); 
 			

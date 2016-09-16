@@ -58,11 +58,11 @@ public class Optimum {
 			
 			epsilon = Math.sqrt(constants1[0]*constants2[0]);
 			minRadius = (constants1[1] + constants2[1])/2;
-			radius= non.distance; 
+			radius= non.getDistance(); 
 			
 			// get energy by substituting into formula
 			nEnergy = epsilon*(Math.pow((minRadius/radius), 12) - 2*Math.pow((minRadius/radius), 6));
-			}
+		}
 		
 		System.out.println(nEnergy);
 		return nEnergy;
