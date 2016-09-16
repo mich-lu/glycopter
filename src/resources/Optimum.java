@@ -45,53 +45,19 @@ public class Optimum {
 		
 		System.out.println("Calculating Non-bonded Energy...");
 		
-		double epsilon = 0;
-		double minRadius = 0; //min intersection radius
-		double radius = 0;   //distance between two atoms
+		double totalEnergy = 0;
+		double interactionEnergy = 0;
 		
-		double nEnergy = 0; //total non-bonded energy
-		
+		// loop through all interations and sum each ones energy
 		for(Interaction non: mol.getInteractionList()){
-			// get appropriate constants
-			Double[] constants1 = getConstants(non.atom1);
-			Double[] constants2 = getConstants(non.atom2);
-			
-			epsilon = Math.sqrt(constants1[0]*constants2[0]);
-			minRadius = (constants1[1] + constants2[1])/2;
-			radius= non.distance; 
-			
-			// get energy by substituting into formula
-			nEnergy = epsilon*(Math.pow((minRadius/radius), 12) - 2*Math.pow((minRadius/radius), 6));
-			}
-		
-		System.out.println(nEnergy);
-		return nEnergy;
-	}
-		
-	public static Double[] getConstants(Atom atom){
-		Double[] constants = new Double[2]; // [epsilon, minRadius]
-		
-		switch(atom.atomType){
-			case "C":
-				constants[0] = -0.032;
-				constants[1] = 2.0;
-				break;
-			case "O":
-				constants[0] = -0.12;
-				constants[1] = 1.7;
-				break;
-			case "O5":
-				constants[0] = -0.1;
-				constants[1] = 1.65;
-				break;
-			case "H":
-				constants[0] = -0.045;
-				constants[1] = 1.34;
-				break;
+			interactionEnergy = non.calculateInteractionEnergy();
+			totalEnergy += interactionEnergy;
 		}
 		
-		return constants;
+		System.out.println(totalEnergy);
+		return totalEnergy;
 	}
+		
 	
 	/*fixed-length steepest descent method
 	 * 
@@ -108,8 +74,16 @@ public class Optimum {
 		//iterate through the dihedral angles to find the OH bonds
 		for( DihedralAngle di : mol.getDihedralList()){
 			
-			double currentEnergy= di.calculateAngleEnergy(di.a1, di.a2, di.a3, di.a4);
-			double previousEnergy =currentEnergy;
+			// get Interaction energies involving atom 4
+			double interactionEnergy = 0;
+			for(Interaction non : mol.getInteractionList()){
+				if(non.getAtom1() == di.a4 || non.getAtom2() == di.a4){
+					interactionEnergy += non.calculateInteractionEnergy();
+				}
+			}
+			
+			double currentEnergy= di.calculateAngleEnergy(di.a1, di.a2, di.a3, di.a4) + interactionEnergy;
+			double previousEnergy =0;
 
 			if (di.a3 instanceof Oxygen &&  di.a4 instanceof Hydrogen){
 		
@@ -117,6 +91,7 @@ public class Optimum {
 				//do the steepest descent for that angle in a certain no. of steps
 				for(int i =0; i<100; i++){
 					
+					previousEnergy = currentEnergy;
 					//calculate the derivative of the energy equation
 					double derivative = firstDerivative(di);
 					
@@ -133,10 +108,20 @@ public class Optimum {
 						
 					//calculate updated dihedral angle
 					di.angle = DihedralAngle.calculateDihedralAngle(di.a1, di.a2, di.a3, di.a4);
-						
+					
+					// update interactions and get new energies
+					interactionEnergy = 0;// reset energy
+					for(Interaction non : mol.getInteractionList()){
+						if(non.getAtom1() == di.a4 || non.getAtom2() == di.a4){
+							non.updateDistance();
+							interactionEnergy += non.calculateInteractionEnergy();
+						}
+					}
+					
 					//calculate the updated energy
-					currentEnergy = di.calculateAngleEnergy(di.a1, di.a2, di.a3, di.a4);
-						
+					currentEnergy = di.calculateAngleEnergy(di.a1, di.a2, di.a3, di.a4) + interactionEnergy;
+		
+					
 					//if the energy is unchanged, or if the enery has increased, change back to old values and break;
 					if(currentEnergy>= previousEnergy){
 							di.a4.setXYZ(oldXYZ);
