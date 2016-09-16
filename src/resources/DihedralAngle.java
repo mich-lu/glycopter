@@ -153,6 +153,17 @@ public class DihedralAngle{
 		return angle;
 	}
 	
+	public Atom getAtom1() {
+		return a1;
+	}
+	
+	public Atom getAtom2() {
+		return a2;
+	}
+	
+	public Atom getAtom3() {
+		return a3;
+	}
 	public Atom getAtom4(){
 		return a4;
 	}

@@ -50,6 +50,7 @@ public class Optimum {
 		
 		// loop through all interations and sum each ones energy
 		for(Interaction non: mol.getInteractionList()){
+
 			interactionEnergy = non.calculateInteractionEnergy();
 			totalEnergy += interactionEnergy;
 		}
@@ -57,6 +58,8 @@ public class Optimum {
 		System.out.println(totalEnergy);
 		return totalEnergy;
 	}
+		
+	
 		
 	
 	/*fixed-length steepest descent method

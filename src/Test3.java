@@ -16,12 +16,9 @@ import resources.Molecule;
 import resources.Optimum;
 
 
-public class PDB_test {
+public class Test3 {
 
-	static String pdb1 = "aDManOMe.pdb"; //total of 27 atoms; total of 27 bonds; total of 48 angles; total of 69 dihedrals
-	static String pdb2 = "aDGlc12aLRha13aDMan.pdb"; //total of 65 atoms; total of 67 bonds; total of 123 angles; total of 195 dihedrals
 	static String pdb3 = "aDGal14aDGlc.pdb"; // total of 45 atoms; total of 46 bonds; total of 83 angles; total of 132 dihedrals
-	static String pdb4 = "aDGal13bDXyl.pdb"; // total of 41 atoms; total of 42 bonds; total of 76 angles; total of 120 dihedrals
 	
 	// lists before energy of molecule is minimized
 	static ArrayList<Atom> atoms = new ArrayList<Atom>();
@@ -47,7 +44,7 @@ public class PDB_test {
 	// load the pdb file and run the plugin
     public static void SetUp() throws IOException {
 		
-        tester.readFromPDB(pdb4);
+        tester.readFromPDB(pdb3);
         atoms = tester.atomList;
         
         //add old atoms to a list of strings
@@ -104,25 +101,25 @@ public class PDB_test {
 	@Test
 	// Test that the plugin loads in the correct number of atoms.
 	public void testNumAtoms() throws Exception {
-		assertEquals("The program should load 41 atoms", 41, atoms.size());
+		assertEquals("The program should load 45 atoms", 45, atoms.size());
 	}
 	
 	@Test
 	//Test that the plugin loads creates the correct number of bond objects
 	public void testNumBonds() throws Exception {
-		assertEquals("The program should load 42 bonds", 42, bondsNew.size());
+		assertEquals("The program should load 46 bonds", 46, bondsNew.size());
 	}
 	
 	@Test
 	// Test that the plugin creates the correct number of angles
 	public void testNumAngles() throws Exception {
-		assertEquals("The program should load 76 angles", 76, anglesNew.size());
+		assertEquals("The program should load 83 angles", 83, anglesNew.size());
 	}
 	
 	@Test
 	// Test that the plugin creates the correct number of dihedral angles
 	public void testNumDihedrals() throws Exception {
-		assertEquals("The program should load 132 dihedrals", 120, dihedralsNew.size());
+		assertEquals("The program should load 132 dihedrals", 132, dihedralsNew.size());
 	}
 
 	@Test

@@ -12,8 +12,9 @@ public class Interaction {
 	int interactionID;
 	static int noInteractions;
 	Atom atom1, atom2;
-	Double distance;
+
 	double energy;
+	double distance;
 	
 	public Interaction(Atom a1, Atom a2, Double d){
 		interactionID = noInteractions;
@@ -90,5 +91,8 @@ public class Interaction {
 		
 		return constants;
 	}
-	
+
+	public double getDistance() {
+		return distance;
+	}
 }

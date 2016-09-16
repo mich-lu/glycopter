@@ -181,7 +181,7 @@ public class Rotation {
     Calculate the sign of angle, using algorithm from:
     The Rainey Lab - Dihedral angle calculation,
     http://structbio.biochem.dal.ca/jrainey/dihedralcalc.html
-    where, sign = sign(n2·(pt2-pt1)) =
+    where, sign = sign(n2sum(pt2-pt1)) =
     sign of dot product of (normal 2 * vector12)
     "angle">double, old angle
     "normal2">double[] the other normal
