@@ -9,7 +9,7 @@ JC = javac
 	$(JC) $(JFLAGS) $*.java
 	
 CLASSES = \
-	PDB.java \
+	Minimizer.java \
 	resources\Atom.java \
 	resources\Bond.java \
 	resources\Carbon.java \
@@ -22,7 +22,7 @@ CLASSES = \
 	resources\Angle.java \
 	resources\Rotation.java \
 
-MAIN: PDB
+MAIN: Minimizer
 
 default: classes
 

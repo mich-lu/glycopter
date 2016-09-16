@@ -35,7 +35,7 @@ public class Test3 {
 	static ArrayList<DihedralAngle> dihedralsNew = new ArrayList<DihedralAngle>();
 	static ArrayList<Angle> anglesNew = new ArrayList<Angle>();
 	
-	static PDB tester = new PDB();
+	static Minimizer tester = new Minimizer();
 	static Molecule molTest;
 	
 	static double initialEnergy, finalEnergy;
