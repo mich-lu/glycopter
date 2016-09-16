@@ -25,5 +25,5 @@ ATOM     23  C6  AMAN    1      -0.755   0.452  -2.142  1.00  0.00      CARB  C
 ATOM     24  H61 AMAN    1      -0.588   0.327  -3.117  1.00  0.00      CARB  H
 ATOM     25  H62 AMAN    1      -1.776   0.241  -2.273  1.00  0.00      CARB  H
 ATOM     26  O6  AMAN    1      -0.625   1.853  -1.957  1.00  0.00      CARB  O
-ATOM     27  HO6 AMAN    1      -0.108   2.574   -2.59  1.00  0.00      CARB  H
+ATOM     27  HO6 AMAN    1      -1.083   2.481  -1.192  1.00  0.00      CARB  H
 END

@@ -26,7 +26,7 @@ import resources.Optimum;
 import resources.Oxygen;
 
 
-public class PDB {
+public class Minimizer {
 	
 	private static String inputFile, filename, fileOutName;
 	static ArrayList<Atom> atomList = new ArrayList<Atom>();
