@@ -1,3 +1,10 @@
+/*
+ * 6 August 2016
+ * Glycopter project
+ * this is the core class of the plugin, implementing the minimization according to the steepest descent, and then
+ * rotating particular atoms according to the calculated rotation angle.
+ */
+
 package resources;
 
 public class Optimum {
@@ -56,9 +63,9 @@ public class Optimum {
 	
 		
 	
-	/*fixed-length steepest descent method
-	 * 
-	 *return the potential energy after this step of minimization 
+	/*
+	 * fixed-length steepest descent method.
+	 * return the potential energy after this step of minimization 
 	 */
 	
 	public static double steepestDescent(Molecule mol){

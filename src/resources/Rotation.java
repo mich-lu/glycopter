@@ -1,3 +1,9 @@
+/*
+ * 6 August 2016
+ * Glycopter project
+ * This class implements the rotation of an atoms in the molecule.
+ */
+
 package resources;
 
 public class Rotation {

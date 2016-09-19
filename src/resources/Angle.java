@@ -1,3 +1,10 @@
+/*
+ * 6 August 2016
+ * Glycopter project
+ * This class calculates and makes a list of all the angles between adjacent bonds in the molecule.
+ * These angles are then be used in testing to ensure that the minimizing process has not changed the angles between bonds.
+*/
+
 package resources;
 
 import java.math.RoundingMode;
@@ -16,6 +23,9 @@ public class Angle {
 		angle = calculateAngle(b1, b2, shared);
 	}
 
+	/*
+	 * Calculate the angle between two adjacent bonds
+	 */
 	public double calculateAngle(Bond B1, Bond B2, Atom shared){ // calculate by finding angle between 2 planes
 		// calculate distances between 3 angles
 		getUniqueAtoms(B1, B2, shared);
@@ -34,6 +44,9 @@ public class Angle {
 		return angle;
 	}
 	
+	/*
+	 * This method takes two adjacent bonds and returns a list containing the three unique atoms making up the angle.
+	 */
 	public void getUniqueAtoms(Bond B1, Bond B2, Atom shared){
 		uniqueList = new Atom[3];
 		uniqueList[1] = shared;

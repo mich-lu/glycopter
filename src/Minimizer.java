@@ -45,7 +45,6 @@ public class Minimizer {
 		
 	    //long startTime = System.currentTimeMillis();
 		
-		
 		finalEnergy = Optimum.steepestDescent(mol);//minimize the energy of the molecule
 		
 		//long endTime = System.currentTimeMillis();
@@ -53,10 +52,11 @@ public class Minimizer {
 		//long runTime = endTime - startTime;
 		
 		writeToPDB(atomList); //output the new molecule representation to PDB
-		
-	
 	}
 	
+	/*
+	 * Read in the input PDB file specified and create the list of atom objects with their associated information
+	 */
 	public static void readFromPDB(String inputFile) throws NumberFormatException, IOException{
 		filename = inputFile;
 		
@@ -126,6 +126,9 @@ public class Minimizer {
 		}
 	}
 	
+	/*
+	 * Write out the updated molecule to the specified output PDB file.
+	 */
 	public static void writeToPDB(ArrayList<Atom> atoms){
 		
 		//more efficient way of building strings
@@ -172,7 +175,6 @@ public class Minimizer {
 			writer.write(sb.toString());
 			writer.write("END");
 			writer.close();
-			System.out.println("Done");
 		
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -48,7 +48,12 @@ public class Molecule {
 		
 	}
 	
-	
+	/*
+	 * This method determines if two atoms are bonded. It calculates the distance between every pair of atoms in the
+	 * molecule. It then compares this distance to the Van der Waals radius that represents a bond between two
+	 * atom types. If the distance is less than this specified Van der Waals radius, it creates a bond object, and
+	 * otherwise it creates an interaction object between those two atoms.
+	 */
 	public void identifyBonds(ArrayList<Atom> atoms, ArrayList<Bond> b){
 		
 		for (int i = 0; i < (atoms.size() - 1); i++){
@@ -118,6 +123,9 @@ public class Molecule {
 		}
 	}
 
+	/*
+	 * This method iterates finds the four atoms composing each dihedral angle in the molecule.
+	 */
 	public void identifyDihedrals(ArrayList<Atom> atomList, ArrayList<DihedralAngle> di){
 		DihedralAngle dihedral;
 		// Determine 4 atoms in dihedral
@@ -138,6 +146,10 @@ public class Molecule {
 		}
 	}
 	
+	/*
+	 * This method iterates through the bond objects, and identifies those sharing a common atom, therefore making up 
+	 * two adjacent bonds.
+	 */
 	public void identifyAngles(ArrayList<Bond> bondList, ArrayList<Angle> a){
 		Angle bondPair;
 		Bond b1, b2;
