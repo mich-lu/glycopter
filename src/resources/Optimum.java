@@ -16,7 +16,6 @@ public class Optimum {
 	
 	public static double calculateDihedralEnergy(Molecule mol){
 			
-		System.out.println("Calculating Dihedral Energy...");
 		
 		// sum up all the energies of all the dihedrals
 		double dihedralEnergy=0;
@@ -32,7 +31,6 @@ public class Optimum {
 			dihedralEnergy += angleEnergy;
 		}
 		
-		System.out.println("The dihedral angle energy = " + dihedralEnergy);
 		return dihedralEnergy;
 		
 	}
@@ -41,7 +39,6 @@ public class Optimum {
 	//calculates the energy between non-bonded atoms
 	public static double calculateNonbondedEnergy(Molecule mol){
 		
-		System.out.println("Calculating Non-bonded Energy...");
 		
 		double totalEnergy = 0;
 		double interactionEnergy = 0;
@@ -53,8 +50,6 @@ public class Optimum {
 			totalEnergy += interactionEnergy;
 		}
 		
-		
-		System.out.println("The Von Neumann non-bonding energy = " + totalEnergy);
 		return totalEnergy;
 	}
 		
@@ -68,7 +63,6 @@ public class Optimum {
 	
 	public static double steepestDescent(Molecule mol){
 		
-		System.out.println("Minimizing energy using Steepest Descent...");
 		
 		double stepsize = -27/50; 
 		
@@ -135,7 +129,6 @@ public class Optimum {
 			}
 		}
 		
-		System.out.println("Molecule is minimized.");
 		return calculateTotalEnergy(mol);
 	}
 		

@@ -7,16 +7,6 @@ public class Rotation {
 	 * https://bitbucket.org/mkuttel/carbbuilderii/src/c6e583aab3bf7189c02a4f9060feff77190a6688/CBIIsource/Rotation.cs?at=default&fileviewer=file-view-default
 	 */
 	
-	
-	/*
-	 * General order of how rotation works
-	 * get angle between the vectors  e.g. double currentAngle = Rotation.getAngleBetweenVector(stationaryAtom,parentO,parentC);
-	 * find the angle to rotate e.g. double angle2rotate = currentAngle - Rotation.getRad(60);
-	 * work out the normal from 3 points e.g. double[] normal = Rotation.getNormal(stationaryAtom,parentO,parentC);
-	 * find the new point e.g. double[] xyz2 = Rotation.getNewPointFromNormal(parentO, normal, angle2rotate, stationaryAtom);
-	 * set the new position e.g. parentNode.setAtomPosition ("HN", 0, xyz2); //unrotate H in NAc
-	 */
-	
 	 /*
     Rotate a point from point A which is on the normal, it uses getNewPoint method
     "pta"> xyz coordinates on the normal

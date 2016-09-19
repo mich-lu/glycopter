@@ -41,38 +41,14 @@ public class Molecule {
 		atom2 = null;
 		numAtoms = atoms.size(); //For testing purposes
 		
-		System.out.println("number of atoms in molecule = " + numAtoms);
-		System.out.println("*****************************************************");
-		System.out.println("Identifying the bonds...");
 		identifyBonds(input, bondList);
-		System.out.println();
-		System.out.println("number of bonds calculated = " + bondList.size());
-		System.out.println("*****************************************************");
-		
-		System.out.println("Identifying the angles between bonds...");
 		identifyAngles(bondList, angleList);
-		
-		System.out.println();
-		System.out.println("number of angles calculated = " + angleList.size());
-		System.out.println("*****************************************************");
-		
-		
-		System.out.println("Identifying the Dihedral Angles...");
-		
 		identifyDihedrals(input, dihedralList);
 		
-		System.out.println();
-		System.out.println("number of dihedral angles calculated = " + dihedralList.size());
 		
 	}
 	
-	/*
-	 * Used method used by RasMol in determining bonds in molecules with less than 255 atoms:
-	 * 1) If (atoms + heteroatoms) is less than or equal to 255, a more time-consuming algorithm is employed. This algorithm can be 
-	 * forced on any loaded structure with the command connect true. Two atoms are considered bonded when the distance between them 
-	 * is between 0.4 Angstroms and (the sum of their covalent radii plus 0.56 Angstroms).
-	 * Source: https://www.umass.edu/microbio/rasmol/rasbonds.htm
-	 */
+	
 	public void identifyBonds(ArrayList<Atom> atoms, ArrayList<Bond> b){
 		
 		for (int i = 0; i < (atoms.size() - 1); i++){

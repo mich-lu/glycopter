@@ -40,34 +40,20 @@ public class Minimizer {
 	public static void main(String[] args) throws IOException{
 		fileOutName = args[1];
 		inputFile = args[0];
-		System.out.println("***************************************************************");
-		System.out.println("Reading in PDB file");
 		readFromPDB(inputFile); //load the atoms and all the information associated with each atom
-		System.out.println("***************************************************************");
-		System.out.println();
-		System.out.println("Identifying atoms");
 		Molecule mol = new Molecule(atomList); //create the molecule object
-		//calculate the energy of the molecule
-		System.out.println("***************************************************************");
-		long startTime = System.currentTimeMillis();
-		initialEnergy = Optimum.calculateTotalEnergy(mol);
-		System.out.println();
-		System.out.println("***************************************************************");
-		System.out.println("The current total energy of the molecule is: " + initialEnergy);
-		System.out.println();
-		System.out.println("***************************************************************");
-		//minimize the energy of the molecule
-		finalEnergy = Optimum.steepestDescent(mol);
-		long endTime = System.currentTimeMillis();
-		System.out.println("***************************************************************");
-		System.out.println("The total initial energy of the molecule was: " + initialEnergy + "\n" + "The minimized energy of the molecule is: " + finalEnergy);
-		System.out.println();
-		long runTime = endTime - startTime;
-		System.out.println("***************************************************************");
-		System.out.println("Writing molceule to output PDB file");
+		
+	    //long startTime = System.currentTimeMillis();
+		
+		
+		finalEnergy = Optimum.steepestDescent(mol);//minimize the energy of the molecule
+		
+		//long endTime = System.currentTimeMillis();
+		
+		//long runTime = endTime - startTime;
+		
 		writeToPDB(atomList); //output the new molecule representation to PDB
-		System.out.println();
-		System.out.println("The calculations took: " + runTime + " ms");
+		
 	
 	}
 	
