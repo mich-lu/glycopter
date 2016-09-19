@@ -1,8 +1,8 @@
 /*
  * 11 August 2016
  * Glycopter project
- * This class just creates objects of pairs of atoms that are not bonded to be used in energy calculations
- * between the non-bonded atoms.
+ * This class creates objects of pairs of atoms that are not bonded to be used in energy calculations
+ * between the non-bonded atoms. The calculation of non-bonded energies is also in this class.
  */
 
 package resources;
@@ -52,6 +52,9 @@ public class Interaction {
 		distance = Math.sqrt(Math.pow((atom2.getX() - atom1.getX()), 2) + Math.pow((atom2.getY() - atom1.getY()), 2) + Math.pow((atom2.getZ() - atom1.getZ()),  2));
 	}
 	
+	/*
+	 * calculate the steric interaction energy between two non-bonded atoms.
+	 */
 	public double calculateInteractionEnergy(){
 		Double[] constants1 = getConstants(atom1);
 		Double[] constants2 = getConstants(atom2);

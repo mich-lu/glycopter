@@ -2,7 +2,7 @@
  * 9 August 2016
  * Glycopter project
  * This class calculates and makes a list of all the dihedral angles in the molecule. This will then be used to
- * calculate the energy associated with the dihedral angles in the molecule 
+ * calculate the energy associated with the dihedral angles in the molecule. 
  */
 package resources;
 
@@ -107,7 +107,7 @@ public class DihedralAngle{
 		
 		if (atomsInvolved.equals("OCCO")){
 			dihedralAngleE = 2.65*(1 + Math.cos(1*calculateDihedralAngle(atom1, atom2, atom3, atom4) - 180))
-			+ 0*(1 + Math.cos(2*calculateDihedralAngle(atom1, atom2, atom3, atom4)- 180)) //NB CHECK THIS LINE (Kchi is zero?)
+			+ 0*(1 + Math.cos(2*calculateDihedralAngle(atom1, atom2, atom3, atom4)- 180))
 			+ 0.13*(1 + Math.cos(3*calculateDihedralAngle(atom1, atom2, atom3, atom4) - 180));
 		}
 		

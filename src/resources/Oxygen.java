@@ -1,7 +1,7 @@
 /*
  * 6 August 2016
  * Glycopter project
- * Instantiation of Atom
+ * Instantiation of Atom of type oxygen (differentiates between O and O5 as required)
  */
 
 package resources;
