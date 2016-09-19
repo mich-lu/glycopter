@@ -5,8 +5,6 @@ public class Optimum {
 	
 	//returns the total potential energy of the molecule
 	public static double calculateTotalEnergy(Molecule mol){
-		
-		System.out.println("Calculating Total Energy...");
 		return (calculateDihedralEnergy(mol) + calculateNonbondedEnergy(mol));
 	}
 	
@@ -34,7 +32,7 @@ public class Optimum {
 			dihedralEnergy += angleEnergy;
 		}
 		
-		System.out.println(dihedralEnergy);
+		System.out.println("The dihedral angle energy = " + dihedralEnergy);
 		return dihedralEnergy;
 		
 	}
@@ -55,7 +53,8 @@ public class Optimum {
 			totalEnergy += interactionEnergy;
 		}
 		
-		System.out.println(totalEnergy);
+		
+		System.out.println("The Von Neumann non-bonding energy = " + totalEnergy);
 		return totalEnergy;
 	}
 		
