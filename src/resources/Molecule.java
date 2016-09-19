@@ -42,10 +42,9 @@ public class Molecule {
 		numAtoms = atoms.size(); //For testing purposes
 		
 		System.out.println("number of atoms in molecule = " + numAtoms);
+		System.out.println("*****************************************************");
 		System.out.println("Identifying the bonds...");
-		
 		identifyBonds(input, bondList);
-		
 		System.out.println();
 		System.out.println("number of bonds calculated = " + bondList.size());
 		System.out.println("*****************************************************");

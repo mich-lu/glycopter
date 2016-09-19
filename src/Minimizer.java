@@ -38,46 +38,47 @@ public class Minimizer {
 	static ArrayList<Atom> newAtomList = new ArrayList<Atom>();
 	
 	public static void main(String[] args) throws IOException{
-		filename = args[0];
 		fileOutName = args[1];
-		//readFromPDB(); //load the atoms and all the information associated with each atom
 		inputFile = args[0];
+		System.out.println("***************************************************************");
+		System.out.println("Reading in PDB file");
 		readFromPDB(inputFile); //load the atoms and all the information associated with each atom
-		
+		System.out.println("***************************************************************");
+		System.out.println();
+		System.out.println("Identifying atoms");
 		Molecule mol = new Molecule(atomList); //create the molecule object
 		//calculate the energy of the molecule
-		System.out.println();
 		System.out.println("***************************************************************");
 		long startTime = System.currentTimeMillis();
 		initialEnergy = Optimum.calculateTotalEnergy(mol);
 		System.out.println();
 		System.out.println("***************************************************************");
-		System.out.println("The current energy of the molecule is: " + initialEnergy);
+		System.out.println("The current total energy of the molecule is: " + initialEnergy);
 		System.out.println();
 		System.out.println("***************************************************************");
 		//minimize the energy of the molecule
 		finalEnergy = Optimum.steepestDescent(mol);
 		long endTime = System.currentTimeMillis();
-		System.out.println("The initial energy of the molecule was: " + initialEnergy + "\n" + "The minimized energy of the molecule is: " + finalEnergy);
-		System.out.println();
 		System.out.println("***************************************************************");
-		System.out.println("new atoms = " + newAtomList.size());
+		System.out.println("The total initial energy of the molecule was: " + initialEnergy + "\n" + "The minimized energy of the molecule is: " + finalEnergy);
+		System.out.println();
 		long runTime = endTime - startTime;
+		System.out.println("***************************************************************");
+		System.out.println("Writing molceule to output PDB file");
 		writeToPDB(atomList); //output the new molecule representation to PDB
+		System.out.println();
 		System.out.println("The calculations took: " + runTime + " ms");
 	
 	}
 	
-//	public static void readFromPDB() throws IOException{
-//		
-//		Scanner scan = new Scanner(System.in);
-	
-	public static void readFromPDB(String inputFile) throws IOException{
+	public static void readFromPDB(String inputFile) throws NumberFormatException, IOException{
 		filename = inputFile;
 		
 		//read in file
-		BufferedReader reader = new BufferedReader(new FileReader(filename));
-		try{
+		BufferedReader reader;
+		try {
+			reader = new BufferedReader(new FileReader(filename));
+		
 		    String line;
 		    String[] elements;
 		    
@@ -131,16 +132,12 @@ public class Minimizer {
 		    	atom.addInformation(part1, part4, part5, part9, part10, part11);
 		    
 		    }
-		    	
+	    }
+		catch (FileNotFoundException e1) {
+		// TODO Auto-generated catch block
+		System.out.println("File not found.");
+		System.exit(0);
 		}
-		
-		catch(FileNotFoundException e){
-			
-			//remember Console.WriteLine
-			System.out.println("File does not exist.");
-		}
-		
-			
 	}
 	
 	public static void writeToPDB(ArrayList<Atom> atoms){
@@ -190,6 +187,7 @@ public class Minimizer {
 			writer.write("END");
 			writer.close();
 			System.out.println("Done");
+		
 		} catch (IOException e) {
 			e.printStackTrace();
 			
@@ -205,6 +203,4 @@ public class Minimizer {
 	public double getFinalEnergy(){
 		return finalEnergy;
 	}
-	
-	//For testing purposes
 }
